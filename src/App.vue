@@ -7,13 +7,13 @@
     <body class="h-full">
     ```
   -->
-  <div class="min-h-full">
-    <Disclosure as="nav" class="bg-gray-800" v-slot="{ open }">
+  <div class="min-h-full ">
+    <Disclosure as="nav" class="bg-gray-800 " v-slot="{ open }">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
           <div class="flex items-center">
             <div class="shrink-0">
-              <img class="size-8" src="https://tailwindui.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500" alt="Your Company" />
+              <img class="size-8" src="https://scontent.fslw1-1.fna.fbcdn.net/v/t39.30808-6/367017172_255837373929010_5834683583790105538_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHMzHGxOaydLDy8bFCc-ovLqVWBAQzTiyqpVYEBDNOLKu7ONwpACiZH_nter9oJH8bTl1zPTxDlTIurOGkPpR5c&_nc_ohc=MmF2j7HCcDIQ7kNvgHUV6E1&_nc_oc=Adh0dz37JWZsM3g2nOXX3Mz0QNTsgVZ3t3szgNJjzIj7Xvk7N6n0R0m-jzAHMdUfwTf03WVRbYPRxXvtgLb0-bfo&_nc_zt=23&_nc_ht=scontent.fslw1-1.fna&_nc_gid=A09qK8S9uQOZ51YeIpZxz8T&oh=00_AYAbJ94yDrThbdos6hPtza7O2lvYo6UFUgJfn-64dOUKTw&oe=67CC547F" alt="Your Company" />
             </div>
             <div class="hidden md:block">
               <div class="ml-10 flex items-baseline space-x-4">
@@ -60,7 +60,7 @@
         </div>
       </div>
 
-      <DisclosurePanel class="md:hidden">
+      <DisclosurePanel class="md:hidden ">
         <div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
           <DisclosureButton v-for="item in navigation" :key="item.name" as="a" :href="item.href" :class="[item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'block rounded-md px-3 py-2 text-base font-medium']" :aria-current="item.current ? 'page' : undefined">{{ item.name }}</DisclosureButton>
         </div>
@@ -93,9 +93,13 @@
     </header>
     <main>
       <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        <!-- Your content -->
+        <!-- Aqui agregue el router-view -->
+        <router-view></router-view>
       </div>
     </main>
+    <div class="text-2xl font-poppins">
+  Prueba de fuente con Tailwind no quiso ola 
+</div>
   </div>
 </template>
 
@@ -110,11 +114,11 @@ const user = {
     'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 }
 const navigation = [
-  { name: 'Acerca de Nosotros', href: '#', current: true },
-  { name: 'Cotiza tu servicio', href: '#', current: false },
-  { name: 'Agenda tu cita', href: '#', current: false },
-  { name: 'Galería', href: '#', current: false },
-  { name: 'Ubicación', href: '#', current: false },
+  { name: 'Acerca de Nosotros', href: '/about', current: true },
+  { name: 'Cotiza tu servicio', href: '/services', current: false },
+  { name: 'Agenda tu cita', href: '/appointment', current: false },
+  { name: 'Galería', href: '/gallery', current: false },
+  { name: 'Ubicación', href: '/location', current: false },
 ]
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
@@ -122,3 +126,4 @@ const userNavigation = [
   { name: 'Sign out', href: '#' },
 ]
 </script>
+
