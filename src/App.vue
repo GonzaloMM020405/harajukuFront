@@ -9,6 +9,7 @@
   -->
   <div class="min-h-full">
     
+    
     <Disclosure as="nav" class="bg-gray-800 mb-14" v-slot="{ open }">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
@@ -80,7 +81,7 @@
               <BellIcon class="size-6" aria-hidden="true" />
             </button>
           </div>
-          <div class="mt-3 space-y-1 px-2">
+          <div class="mt-3 space-y-1 px-2 ">
             <DisclosureButton v-for="item in userNavigation" :key="item.name" as="a" :href="item.href" class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">{{ item.name }}</DisclosureButton>
           </div>
         </div>
@@ -95,7 +96,7 @@
     <main>
       <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
 
-        <div id="sticky-banner" tabindex="-1" class="fixed top-0 start-0 z-50 flex justify-between w-full p-4 border-b border-gray-200 bg-gray-50 dark:bg-gray-700 dark:border-gray-600 mt-14">
+    <div id="sticky-banner" tabindex="-1" class="fixed top-0 start-0 flex justify-between w-full p-4 border-b border-gray-200 bg-gray-50 dark:bg-gray-700 dark:border-gray-600 mt-14">
   <div class="flex items-center mx-auto">
     <p class="flex items-center text-sm font-normal text-gray-500 dark:text-gray-400">
       <span class="inline-flex p-1 me-3 bg-gray-200 rounded-full dark:bg-gray-600 w-6 h-6 items-center justify-center shrink-0">
@@ -109,7 +110,7 @@
   </div>
 </div>
 
-
+        
         <!-- Aqui agregue el router-view -->
         <router-view></router-view>
 
@@ -167,6 +168,7 @@
 
 <script setup>
 import { FwbCarousel } from 'flowbite-vue'
+import { ref } from 'vue'
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 
@@ -188,5 +190,5 @@ const userNavigation = [
   { name: 'Settings', href: '#' },
   { name: 'Sign out', href: '#' },
 ]
-</script>
 
+</script>
