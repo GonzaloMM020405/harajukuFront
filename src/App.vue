@@ -7,9 +7,7 @@
     <body class="h-full">
     ```
   -->
-  <div class="min-h-full">
-    
-    
+  <div class="min-h-full">        
     <Disclosure as="nav" class="bg-gray-800 mb-14" v-slot="{ open }">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
@@ -43,8 +41,20 @@
                 <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
                   <MenuItems class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none">
                     <MenuItem v-for="item in userNavigation" :key="item.name" v-slot="{ active }">
-                      <a :href="item.href" :class="[active ? 'bg-gray-100 outline-none' : '', 'block px-4 py-2 text-sm text-gray-700']">{{ item.name }}</a>
-                    </MenuItem>
+  <button
+    v-if="item.action"
+    @click="item.action ? item.action() : null"
+    :class="[active ? 'bg-gray-100' : '', 'block w-full text-left px-4 py-2 text-sm text-gray-700']">
+    {{ item.name }}
+  </button>
+  <a
+    v-else
+    :href="item.href"
+    :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">
+    {{ item.name }}
+  </a>
+</MenuItem>
+                     
                   </MenuItems>
                 </transition>
               </Menu>
@@ -68,9 +78,6 @@
         </div>
         <div class="border-t border-gray-700 pb-3 pt-4">
           <div class="flex items-center px-5">
-            <div class="shrink-0">
-              <img class="size-10 rounded-full" :src="user.imageUrl" alt="" />
-            </div>
             <div class="ml-3">
               <div class="text-base/5 font-medium text-white">{{ user.name }}</div>
               <div class="text-sm font-medium text-gray-400">{{ user.email }}</div>
@@ -87,7 +94,8 @@
         </div>
       </DisclosurePanel>
     </Disclosure>
-
+    <Cuenta v-if="showSignInModal" @cerrar="closeSignInModal" />
+    
     <header class="bg-white shadow">
       <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <h1 class="text-3xl font-bold tracking-tight text-gray-900">Saloncito Harajuku</h1>
@@ -96,19 +104,8 @@
     <main>
       <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
 
-    <div id="sticky-banner" tabindex="-1" class="fixed top-0 start-0 flex justify-between w-full p-4 border-b border-gray-200 bg-gray-50 dark:bg-gray-700 dark:border-gray-600 mt-14">
-  <div class="flex items-center mx-auto">
-    <p class="flex items-center text-sm font-normal text-gray-500 dark:text-gray-400">
-      <span class="inline-flex p-1 me-3 bg-gray-200 rounded-full dark:bg-gray-600 w-6 h-6 items-center justify-center shrink-0">
-        <svg class="w-3 h-3 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 19">
-          <path d="M15 1.943v12.114a1 1 0 0 1-1.581.814L8 11V5l5.419-3.871A1 1 0 0 1 15 1.943ZM7 4H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2v5a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2V4ZM4 17v-5h1v5H4ZM16 5.183v5.634a2.984 2.984 0 0 0 0-5.634Z"/>
-        </svg>
-        <span class="sr-only"></span>
-      </span>
-      <span>¡Celebra el amor y la belleza este San Valentín en nuestro salón!  💌  Disfruta de la promoción especial: dos cortes por $300 pesos para ti y tu amistad o pareja.</span>
-    </p>
-  </div>
-</div>
+     
+      
 
         
         <!-- Aqui agregue el router-view -->
@@ -120,7 +117,7 @@
     </main>
 
 
-    <div id="default-carousel" class="relative w-full" data-carousel="slide">
+    <div id="default-carousel" class="relative w-full z-40"  data-carousel="slide" >
   <!-- Carousel wrapper -->
   <div class="relative h-96 overflow-hidden rounded-lg md:h-[500px] bg-gradient-to-r from-blue-200 to-blue-800">
     <!-- Items del carrusel -->
@@ -169,8 +166,26 @@
 <script setup>
 import { FwbCarousel } from 'flowbite-vue'
 import { ref } from 'vue'
+import Cuenta from './views/components/Cuenta.vue'
+import Banner from './views/components/Banner.vue'
+
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
+
+
+//estados del modal para login
+const showSignInModal = ref(false) // Estado del modal
+
+const openSignInModal = () => {
+  console.log("Abriendo el modal"); 
+  showSignInModal.value = true
+}
+
+const closeSignInModal = () => {
+  console.log("cerrarando modal");
+  showSignInModal.value = false
+
+}
 
 const user = {
   name: 'Tom Cook',
@@ -188,7 +203,12 @@ const navigation = [
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
   { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '#' },
+  { name: 'Sign in', action: openSignInModal}, //agregregue aqui
+  { name: 'Sign out', href: '#' }
+ 
 ]
+
+
+
 
 </script>
