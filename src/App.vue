@@ -1,4 +1,5 @@
 <template>
+  <link rel="icon" href="/public/iconos/favicon.ico" />
   <!--
     This example requires updating your template:
 
@@ -15,7 +16,7 @@
         <div class="flex h-16 items-center justify-between">
           <div class="flex items-center">
             <div class="shrink-0">
-              <img class="size-8" src="https://scontent.fslw1-1.fna.fbcdn.net/v/t39.30808-6/367017172_255837373929010_5834683583790105538_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHMzHGxOaydLDy8bFCc-ovLqVWBAQzTiyqpVYEBDNOLKu7ONwpACiZH_nter9oJH8bTl1zPTxDlTIurOGkPpR5c&_nc_ohc=MmF2j7HCcDIQ7kNvgHUV6E1&_nc_oc=Adh0dz37JWZsM3g2nOXX3Mz0QNTsgVZ3t3szgNJjzIj7Xvk7N6n0R0m-jzAHMdUfwTf03WVRbYPRxXvtgLb0-bfo&_nc_zt=23&_nc_ht=scontent.fslw1-1.fna&_nc_gid=A09qK8S9uQOZ51YeIpZxz8T&oh=00_AYAbJ94yDrThbdos6hPtza7O2lvYo6UFUgJfn-64dOUKTw&oe=67CC547F" alt="Your Company" />
+              <img class="size-8 rounded-full" src="/public/iconos/faviconMorade.ico" alt="Your Company" />
             </div>
             <div class="hidden md:block">
               <div class="ml-10 flex items-baseline space-x-4">
@@ -37,7 +38,7 @@
                   <MenuButton class="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                     <span class="absolute -inset-1.5" />
                     <span class="sr-only">Open user menu</span>
-                    <img class="size-8 rounded-full" src="https://scontent.fslw1-1.fna.fbcdn.net/v/t39.30808-6/367017172_255837373929010_5834683583790105538_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHMzHGxOaydLDy8bFCc-ovLqVWBAQzTiyqpVYEBDNOLKu7ONwpACiZH_nter9oJH8bTl1zPTxDlTIurOGkPpR5c&_nc_ohc=MmF2j7HCcDIQ7kNvgHUV6E1&_nc_oc=Adh0dz37JWZsM3g2nOXX3Mz0QNTsgVZ3t3szgNJjzIj7Xvk7N6n0R0m-jzAHMdUfwTf03WVRbYPRxXvtgLb0-bfo&_nc_zt=23&_nc_ht=scontent.fslw1-1.fna&_nc_gid=A09qK8S9uQOZ51YeIpZxz8T&oh=00_AYAbJ94yDrThbdos6hPtza7O2lvYo6UFUgJfn-64dOUKTw&oe=67CC547F" alt="" />
+                    <img class="size-8 rounded-full" src="/public/iconos/favicon.ico" alt="" />
                   </MenuButton>
                 </div>
                 <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
