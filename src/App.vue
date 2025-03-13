@@ -53,7 +53,8 @@
     :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">
     {{ item.name }}
   </a>
-</MenuItem>
+
+  </MenuItem>
                      
                   </MenuItems>
                 </transition>
@@ -103,20 +104,12 @@
     </header>
     <main>
       <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-
-     
-      
-
-        
         <!-- Aqui agregue el router-view -->
         <router-view></router-view>
-
-        
-
       </div>
     </main>
 
-
+    
     <div id="default-carousel" class="relative w-full z-40"  data-carousel="slide" >
   <!-- Carousel wrapper -->
   <div class="relative h-96 overflow-hidden rounded-lg md:h-[500px] bg-gradient-to-r from-blue-200 to-blue-800">
@@ -159,7 +152,8 @@
         </span>
     </button>
 </div>
-
+<!--Aqui Agregue el banner-->
+<Banner />
   </div>
 </template>
 
