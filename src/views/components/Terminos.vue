@@ -1,4 +1,5 @@
 <template>
+    <div>
     <div v-if="mostrarTerminos" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div class="bg-white p-6 rounded-lg shadow-lg max-w-lg text-center">
         <h2 class="text-lg font-bold mb-4">Términos y Condiciones</h2>
@@ -22,6 +23,7 @@
         </button>
       </div>
     </div>
+    </div>
 </template>
 
 
@@ -29,10 +31,16 @@
 import { ref } from 'vue'
 //aqui estan los datos del modal terminos y condiciones
 const mostrarTerminos = ref(true) 
+const emit = defineEmits(['cerrar']) // Declara que el componente puede emitir "cerrar"
+
 
 const aceptarTerminos = () => {
-  mostrarTerminos.value = false                                         
+  mostrarTerminos.value = false
+  emit('cerrar');
 }
+
+
+
 </script>
 
 <style>
