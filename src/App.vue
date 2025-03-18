@@ -96,8 +96,10 @@
         </div>
       </DisclosurePanel>
     </Disclosure>
-    <Cuenta v-if="showSignInModal" @cerrar="closeSignInModal" />
     
+    <Cuenta v-if="modals.openSignInModal" @cerrar="toggleModal('openSignInModal', false)" />
+    <IniciarSesion v-if="modals.openLoginModal" @cerrar="toggleModal('openLoginModal', false)" />
+
     <header class="bg-white shadow">
       <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <h1 class="text-3xl font-bold tracking-tight text-gray-900">Saloncito Harajuku</h1>
@@ -162,6 +164,7 @@
 import { FwbCarousel } from 'flowbite-vue'
 import { ref } from 'vue'
 import Cuenta from './views/components/Cuenta.vue'
+import IniciarSesion from './views/components/IniciarSesion.vue'
 import Banner from './views/components/Banner.vue'
 
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
@@ -169,18 +172,18 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 
 
 //estados del modal para login
-const showSignInModal = ref(false) // Estado del modal
+const modals = ref({
+  openLoginModal: false,
+  openSignInModal: false
+});
 
-const openSignInModal = () => {
-  console.log("Abriendo el modal"); 
-  showSignInModal.value = true
-}
+const toggleModal = (modalName, state) => {
+  console.log(`${state ? "Abriendo" : "Cerrando"} el modal: ${modalName}`);
+  modals.value[modalName] = state;
+};
 
-const closeSignInModal = () => {
-  console.log("cerrarando modal");
-  showSignInModal.value = false
 
-}
+
 
 const user = {
   name: 'Tom Cook',
@@ -197,8 +200,8 @@ const navigation = [
 ]
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
-  { name: 'Settings', href: '#' },
-  { name: 'Sign in', action: openSignInModal}, //agregregue aqui
+  { name: 'Log in', action: () => toggleModal('openLoginModal', true) },
+  { name: 'Sign in', action: () => toggleModal('openSignInModal', true)}, //agregregue aqui
   { name: 'Sign out', href: '#' }
  
 ]
