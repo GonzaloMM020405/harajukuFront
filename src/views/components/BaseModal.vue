@@ -1,22 +1,23 @@
 <!-- BaseModal.vue -->
 <template>
-    <div class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-      <div class="rounded-lg shadow-xl w-full max-w-3xl flex relative bg-white">
+    <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50 rounded-lg">
+      <div class="rounded-lg shadow-xl w-full max-w-3xl flex relative">
         <!-- Sección Izquierda (Imagen) -->
-        <div class="rounded-l-lg w-1/2 hidden sm:flex bg-opacity-80 items-center justify-center">
+        <div class="rounded-l-lg w-1/2 hidden sm:flex bg-white bg-opacity-80 items-center justify-center">
           <img 
             src="/public/iconos/hara.png" 
             alt="Imagen de modal"
-            class="max-w-full max-h-full object-contain rounded-lg"
+            class="w-full h-auto object-contain rounded-2xl shadow-lg"
           />  
         </div>
         
         <!-- Sección Derecha (Contenido dinámico) -->
-        <div class="w-full sm:w-1/2 p-6 relative">
+        <div class="w-full sm:w-1/2 p-6 relative bg-white rounded-r-lg">
           <button 
             @click="$emit('close')" 
             class="absolute top-2 right-2 text-gray-500 hover:text-red-500 text-xl"
           >
+          ✖
           </button>
           <slot></slot>
         </div>

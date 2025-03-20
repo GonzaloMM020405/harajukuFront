@@ -52,18 +52,23 @@
         </span>
       </label>
 
-      <button type="submit" class="btn-primary">
-        Crear cuenta
-      </button>
+    
+      <button 
+             type="submit" 
+             class="bg-blue-500 text-white px-4 py-2 rounded w-full font-semibold hover:bg-blue-600 transition duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed"
+             :disabled="!termsAccepted">
+             Crear cuenta
+           </button>
       
       <span class="text-sm">
         ¿Ya tienes cuenta? 
-        <button type="button" @click="$emit('switch-to-login')" class="link">
+        <button type="button" @click="$emit('switch-to-login')" class="text-blue-600 hover:underline focus:outline-none">
           Inicia Sesión
         </button>
       </span>
     </form>
   </BaseModal>
+  <Terminos v-if="showTermsModal" @cerrar="showTermsModal = false" />
 </template>
 
 <script>
