@@ -1,4 +1,5 @@
 <template>
+  <link rel="icon" href="/public/iconos/favicon.ico" />
   <!--
     This example requires updating your template:
 
@@ -7,15 +8,13 @@
     <body class="h-full">
     ```
   -->
-  <div class="min-h-full">
-    
-    
+  <div class="min-h-full">        
     <Disclosure as="nav" class="bg-gray-800 mb-14" v-slot="{ open }">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
           <div class="flex items-center">
             <div class="shrink-0">
-              <img class="size-8" src="https://scontent.fslw1-1.fna.fbcdn.net/v/t39.30808-6/367017172_255837373929010_5834683583790105538_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHMzHGxOaydLDy8bFCc-ovLqVWBAQzTiyqpVYEBDNOLKu7ONwpACiZH_nter9oJH8bTl1zPTxDlTIurOGkPpR5c&_nc_ohc=MmF2j7HCcDIQ7kNvgHUV6E1&_nc_oc=Adh0dz37JWZsM3g2nOXX3Mz0QNTsgVZ3t3szgNJjzIj7Xvk7N6n0R0m-jzAHMdUfwTf03WVRbYPRxXvtgLb0-bfo&_nc_zt=23&_nc_ht=scontent.fslw1-1.fna&_nc_gid=A09qK8S9uQOZ51YeIpZxz8T&oh=00_AYAbJ94yDrThbdos6hPtza7O2lvYo6UFUgJfn-64dOUKTw&oe=67CC547F" alt="Your Company" />
+              <img class="size-8 rounded-full" src="/public/iconos/faviconMorade.ico" alt="Your Company" />
             </div>
             <div class="hidden md:block">
               <div class="ml-10 flex items-baseline space-x-4">
@@ -37,14 +36,27 @@
                   <MenuButton class="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                     <span class="absolute -inset-1.5" />
                     <span class="sr-only">Open user menu</span>
-                    <img class="size-8 rounded-full" src="https://scontent.fslw1-1.fna.fbcdn.net/v/t39.30808-6/367017172_255837373929010_5834683583790105538_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHMzHGxOaydLDy8bFCc-ovLqVWBAQzTiyqpVYEBDNOLKu7ONwpACiZH_nter9oJH8bTl1zPTxDlTIurOGkPpR5c&_nc_ohc=MmF2j7HCcDIQ7kNvgHUV6E1&_nc_oc=Adh0dz37JWZsM3g2nOXX3Mz0QNTsgVZ3t3szgNJjzIj7Xvk7N6n0R0m-jzAHMdUfwTf03WVRbYPRxXvtgLb0-bfo&_nc_zt=23&_nc_ht=scontent.fslw1-1.fna&_nc_gid=A09qK8S9uQOZ51YeIpZxz8T&oh=00_AYAbJ94yDrThbdos6hPtza7O2lvYo6UFUgJfn-64dOUKTw&oe=67CC547F" alt="" />
+                    <img class="size-8 rounded-full" src="/public/iconos/favicon.ico" alt="" />
                   </MenuButton>
                 </div>
                 <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
                   <MenuItems class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none">
                     <MenuItem v-for="item in userNavigation" :key="item.name" v-slot="{ active }">
-                      <a :href="item.href" :class="[active ? 'bg-gray-100 outline-none' : '', 'block px-4 py-2 text-sm text-gray-700']">{{ item.name }}</a>
-                    </MenuItem>
+  <button
+    v-if="item.action"
+    @click="item.action ? item.action() : null"
+    :class="[active ? 'bg-gray-100' : '', 'block w-full text-left px-4 py-2 text-sm text-gray-700']">
+    {{ item.name }}
+  </button>
+  <a
+    v-else
+    :href="item.href"
+    :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">
+    {{ item.name }}
+  </a>
+
+  </MenuItem>
+                     
                   </MenuItems>
                 </transition>
               </Menu>
@@ -68,9 +80,6 @@
         </div>
         <div class="border-t border-gray-700 pb-3 pt-4">
           <div class="flex items-center px-5">
-            <div class="shrink-0">
-              <img class="size-10 rounded-full" :src="user.imageUrl" alt="" />
-            </div>
             <div class="ml-3">
               <div class="text-base/5 font-medium text-white">{{ user.name }}</div>
               <div class="text-sm font-medium text-gray-400">{{ user.email }}</div>
@@ -87,6 +96,19 @@
         </div>
       </DisclosurePanel>
     </Disclosure>
+    
+
+    <IniciarSesion 
+    v-if="modals.currentModal === 'login'"
+    @cerrar="toggleModal('login')"
+    @switch-to-register="toggleModal('register')"
+    />
+    <Cuenta 
+    v-if="modals.currentModal === 'register'"
+    @cerrar="toggleModal('register')"
+    @switch-to-login="toggleModal('login')"
+    />
+    
 
     <header class="bg-white shadow">
       <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
@@ -95,32 +117,13 @@
     </header>
     <main>
       <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-
-    <div id="sticky-banner" tabindex="-1" class="fixed top-0 start-0 flex justify-between w-full p-4 border-b border-gray-200 bg-gray-50 dark:bg-gray-700 dark:border-gray-600 mt-14">
-  <div class="flex items-center mx-auto">
-    <p class="flex items-center text-sm font-normal text-gray-500 dark:text-gray-400">
-      <span class="inline-flex p-1 me-3 bg-gray-200 rounded-full dark:bg-gray-600 w-6 h-6 items-center justify-center shrink-0">
-        <svg class="w-3 h-3 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 19">
-          <path d="M15 1.943v12.114a1 1 0 0 1-1.581.814L8 11V5l5.419-3.871A1 1 0 0 1 15 1.943ZM7 4H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2v5a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2V4ZM4 17v-5h1v5H4ZM16 5.183v5.634a2.984 2.984 0 0 0 0-5.634Z"/>
-        </svg>
-        <span class="sr-only"></span>
-      </span>
-      <span>¡Celebra el amor y la belleza este San Valentín en nuestro salón!  💌  Disfruta de la promoción especial: dos cortes por $300 pesos para ti y tu amistad o pareja.</span>
-    </p>
-  </div>
-</div>
-
-        
         <!-- Aqui agregue el router-view -->
         <router-view></router-view>
-
-        
-
       </div>
     </main>
 
-
-    <div id="default-carousel" class="relative w-full" data-carousel="slide">
+    
+    <div id="default-carousel" class="relative w-full z-40"  data-carousel="slide" >
   <!-- Carousel wrapper -->
   <div class="relative h-96 overflow-hidden rounded-lg md:h-[500px] bg-gradient-to-r from-blue-200 to-blue-800">
     <!-- Items del carrusel -->
@@ -162,15 +165,38 @@
         </span>
     </button>
 </div>
-
+<!--Aqui Agregue el banner-->
+<Banner />
   </div>
 </template>
 
 <script setup>
 import { FwbCarousel } from 'flowbite-vue'
 import { ref } from 'vue'
+import Cuenta from './views/components/Cuenta.vue'
+import IniciarSesion from './views/components/IniciarSesion.vue'
+import Banner from './views/components/Banner.vue'
+// hola si lees esto espero que sea porque funciona
+import BaseModal from './views/components/BaseModal.vue'
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
+
+
+//estados del modal para login
+const modals = ref({
+  currentModal: null // 'login', 'register'
+  //openLoginModal: false,
+  //openSignInModal: false
+});
+
+/*const toggleModal = (modalName, state) => {
+  console.log(`${state ? "Abriendo" : "Cerrando"} el modal: ${modalName}`);
+  modals.value[modalName] = state;
+};*/
+
+const toggleModal = (modalName) => {
+  modals.value.currentModal = modals.value.currentModal === modalName ? null : modalName;
+};
 
 const user = {
   name: 'Tom Cook',
@@ -185,10 +211,20 @@ const navigation = [
   { name: 'Galería', href: '/gallery', current: false },
   { name: 'Ubicación', href: '/location', current: false },
 ]
+/*
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
-  { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '#' },
-]
+  { name: 'Log in', action: () => toggleModal('openLoginModal', true) },
+  { name: 'Sign in', action: () => toggleModal('openSignInModal', true)}, //agregregue aqui
+  { name: 'Sign out', href: '#' }
+ 
+]*/
+const userNavigation = [
+  { name: 'Your Profile', href: '#' },
+  { name: 'Log in', action: () => toggleModal('login') },
+  { name: 'Sign in', action: () => toggleModal('register')},
+  { name: 'Sign out', href: '#' }
+];
+
 
 </script>
