@@ -1,5 +1,7 @@
 <template>
   <!-- Modal de Registro -->
+  <div>
+  <div v-if="!showCodigo">
   <div class="fixed inset-0 flex items-center justify-center z-50 rounded-lg">
     <div class="rounded-lg shadow-xl w-full max-w-3xl flex relative">
       <div class="rounded-l-lg w-1/2 hidden sm:flex bg-white bg-opacity-80 flex items-center justify-center">
@@ -85,21 +87,27 @@
       </div>
     </div>
   </div>
+    <Terminos v-if="showTermsModal" @cerrar="closeTermsModal" />
+  </div>  
+  </div>
 
-  <Terminos v-if="showTermsModal" @cerrar="closeTermsModal" />
+  
   <IniciarSesion v-if="showIniciarSesion" @cerrar="closeIniciarSesion" />
+  <Codigo v-if="showCodigo" @cerrar="closeCodigo" />
 </template>
 
 <script>
 import { ref } from 'vue'
 import Terminos from './Terminos.vue'
 import IniciarSesion from './IniciarSesion.vue'
+import Codigo from './Codigo.vue'
 
 export default {
   name: 'Cuenta',
   components: {
     Terminos,
-    IniciarSesion
+    IniciarSesion,
+    Codigo
   },
   emits: ['cerrar'],
   data() {
@@ -110,7 +118,8 @@ export default {
       telefono: '',
       termsAccepted: false,
       showTermsModal: false,
-      showIniciarSesion: false
+      showIniciarSesion: false,
+      showCodigo: false
     }
   },
   methods: {
@@ -139,6 +148,10 @@ export default {
     openIniciarSesion() {
       this.showIniciarSesion = true;
       this.closeTermsModal();
+    },
+    closeCodigo() {
+      console.log("Cerrando modal codigo");
+      this.showCodigo = false;
     }
   }
 }

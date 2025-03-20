@@ -63,7 +63,7 @@
   </div>
 
   
-  <Terminos v-if="showTermsModal" @cerrar="closeTermsModal" />
+  
   <IniciarSesion v-if="showIniciarSesion" @cerrar="closeIniciarSesion" />
 </template>
 
