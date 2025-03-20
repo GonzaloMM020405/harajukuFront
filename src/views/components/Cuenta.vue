@@ -11,7 +11,7 @@
       </div>
       <!-- Sección Derecha (Formulario) -->
       <div class="bg-white w-full sm:w-1/2 p-6 relative rounded-r-lg">
-        <!-- Botón para cerrar -->
+        <!-- Bootoncin cerrar -->
         <button @click="$emit('cerrar')" class="absolute top-2 right-2 text-gray-500 hover:text-red-500 text-xl">
           ✖
         </button>
@@ -58,13 +58,12 @@
               class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </label>
-          <!--para que se acepten los terminos y condiciones-->
-          <!-- Checkbox con botón que abre el modal -->
+          <!-- Checkbox para aceptar términos y abrir modal de términos -->
           <label class="flex items-center space-x-2 text-gray-600 text-sm">
             <input v-model="termsAccepted" type="checkbox" class="w-4 h-4 text-blue-500 border-gray-300 rounded focus:ring-2 focus:ring-blue-500">
             <span>
               Acepto los
-              <button class="text-blue-600 hover:underline focus:outline-none" href="#" @click="openTermsModal">
+              <button type="button" class="text-blue-600 hover:underline focus:outline-none" @click="openTermsModal">
                 Términos y Condiciones
               </button>
             </span>
@@ -78,8 +77,8 @@
           </button>
           <span>
             ¿Ya tienes una cuenta?
-            <button @click="showIniciarSesion = true" class="text-blue-600 hover:underline focus:outline-none">
-              Inicia Sesion
+            <button type="button" @click="openIniciarSesion" class="text-blue-600 hover:underline focus:outline-none">
+              Inicia Sesión
             </button>
           </span>
         </form>
@@ -91,48 +90,56 @@
   <IniciarSesion v-if="showIniciarSesion" @cerrar="closeIniciarSesion" />
 </template>
 
-<script setup>
+<script>
 import { ref } from 'vue'
 import Terminos from './Terminos.vue'
 import IniciarSesion from './IniciarSesion.vue'
 
-// Variables para los campos de login
-const email = ref('')
-const password = ref('')
-const name = ref('')
-const telefono = ref('')
-const termsAccepted = ref(false) // osea variable para que acepte terminos y condiciones
-const showTermsModal = ref(false)
-const showIniciarSesion = ref(false)
-const emit = defineEmits(['cerrar'])
-//logica para el login
-const handleLogin = () => {
-  if (!termsAccepted.value) {
-    alert("Debes aceptar los términos y condiciones antes de continuar.")
-    return
+export default {
+  name: 'Cuenta',
+  components: {
+    Terminos,
+    IniciarSesion
+  },
+  emits: ['cerrar'],
+  data() {
+    return {
+      email: '',
+      password: '',
+      name: '',
+      telefono: '',
+      termsAccepted: false,
+      showTermsModal: false,
+      showIniciarSesion: false
+    }
+  },
+  methods: {
+    handleLogin() {
+      if (!this.termsAccepted) {
+        alert("Debes aceptar los términos y condiciones antes de continuar.")
+        return;
+      }
+      console.log("Cuenta creada con:", {
+        name: this.name,
+        email: this.email,
+        telefono: this.telefono
+      });
+    },
+    openTermsModal() {
+      console.log("Abriendo el modal de términos");
+      this.showTermsModal = true;
+    },
+    closeTermsModal() {
+      console.log("Cerrando modal de términos");
+      this.showTermsModal = false;
+    },
+    closeIniciarSesion() {
+      this.showIniciarSesion = false;
+    },
+    openIniciarSesion() {
+      this.showIniciarSesion = true;
+      this.closeTermsModal();
+    }
   }
-  console.log("Cuenta creada con:", { name: name.value, email: email.value, telefono: telefono.value })
 }
-
-
-const openTermsModal = () => {
-  console.log("Abriendo el modal de terminos"); 
-  showTermsModal.value = true
-}
-
-const closeTermsModal = () => {
-  console.log("cerrarando modal terminos");
-  showTermsModal.value = false
-
-}
-
-const closeIniciarSesion = () => {
-  showIniciarSesion.value = false
-}
-
-const openIniciarSesion = () => {
-  showIniciarSesion.value = true
-  closeTermsModal()
-}
-
 </script>
