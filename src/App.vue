@@ -97,8 +97,18 @@
       </DisclosurePanel>
     </Disclosure>
     
-    <Cuenta v-if="modals.openSignInModal" @cerrar="toggleModal('openSignInModal', false)" />
-    <IniciarSesion v-if="modals.openLoginModal" @cerrar="toggleModal('openLoginModal', false)" />
+
+    <IniciarSesion 
+    v-if="modals.currentModal === 'login'"
+    @cerrar="toggleModal('login')"
+    @switch-to-register="toggleModal('register')"
+    />
+    <Cuenta 
+    v-if="modals.currentModal === 'register'"
+    @cerrar="toggleModal('register')"
+    @switch-to-login="toggleModal('login')"
+    />
+    
 
     <header class="bg-white shadow">
       <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
@@ -166,24 +176,27 @@ import { ref } from 'vue'
 import Cuenta from './views/components/Cuenta.vue'
 import IniciarSesion from './views/components/IniciarSesion.vue'
 import Banner from './views/components/Banner.vue'
-
+// hola si lees esto espero que sea porque funciona
+import BaseModal from './views/components/BaseModal.vue'
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 
 
 //estados del modal para login
 const modals = ref({
-  openLoginModal: false,
-  openSignInModal: false
+  currentModal: null // 'login', 'register'
+  //openLoginModal: false,
+  //openSignInModal: false
 });
 
-const toggleModal = (modalName, state) => {
+/*const toggleModal = (modalName, state) => {
   console.log(`${state ? "Abriendo" : "Cerrando"} el modal: ${modalName}`);
   modals.value[modalName] = state;
+};*/
+
+const toggleModal = (modalName) => {
+  modals.value.currentModal = modals.value.currentModal === modalName ? null : modalName;
 };
-
-
-
 
 const user = {
   name: 'Tom Cook',
@@ -198,15 +211,20 @@ const navigation = [
   { name: 'Galería', href: '/gallery', current: false },
   { name: 'Ubicación', href: '/location', current: false },
 ]
+/*
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
   { name: 'Log in', action: () => toggleModal('openLoginModal', true) },
   { name: 'Sign in', action: () => toggleModal('openSignInModal', true)}, //agregregue aqui
   { name: 'Sign out', href: '#' }
  
-]
-
-
+]*/
+const userNavigation = [
+  { name: 'Your Profile', href: '#' },
+  { name: 'Log in', action: () => toggleModal('login') },
+  { name: 'Sign in', action: () => toggleModal('register')},
+  { name: 'Sign out', href: '#' }
+];
 
 
 </script>
