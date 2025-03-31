@@ -4,8 +4,14 @@
    <Carousel />      
   </div>
 
+  <header class="bg-white shadow">
+      <div class="mx-auto max-w-7xl px-4 py-6">
+        <h1 class="text-3xl font-bold">Opiniones de los clientes</h1>
+      </div>
+    </header>
+
   <!-- Sección de las opiniones -->
-  <div v-for="(opinion, index) in opiniones" :key="index" class="max-w-lg mx-auto bg-white shadow-lg rounded-xl p-8 text-center mb-6">
+  <div v-for="(opinion, index) in opiniones" :key="index" class="max-w-lg mx-auto bg-white shadow-lg rounded-xl p-8 text-center mb-14 mt-14">
     
     <!-- Imagen -->
     <img :src="opinion.imagen" alt="Foto de perfil" class="w-20 h-20 rounded-full object-cover mx-auto">

@@ -9,7 +9,10 @@ import Location from '../views/Location.vue'
 
 
 const routes = [
-  { path: '/', name: 'Home', component: Home },
+  {
+    path: '/',
+    redirect: '/about'
+  },
   { path: '/about', name: 'About', component: About },
   { path: '/services', name: 'Services', component: Services },
   { path: '/appointment', name: 'Appointment', component: Appointment },
