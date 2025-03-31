@@ -20,6 +20,7 @@
 
         <form @submit.prevent="validateCode" class="space-y-4">
           <label class="block">
+            <p class="text-sm text-gray-500 mb-6">Si el correo es válido, ingresa el código que se muestra en tu buzón de entrada para validar tu correo y registrarte.</p>
             <span class="text-gray-600 font-medium">Inserta el codigo:</span>
             <input 
               v-model="code" 
