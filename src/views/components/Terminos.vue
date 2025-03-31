@@ -2,6 +2,7 @@
     <div>
     <div v-if="mostrarTerminos" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div class="bg-white p-6 rounded-lg shadow-lg max-w-lg text-center">
+        
         <h2 class="text-lg font-bold mb-4">Términos y Condiciones</h2>
         <p class="text-gray-700 mb-4">
           Acepta los términos y condiciones para continuar utilizando la página.

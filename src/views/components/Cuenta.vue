@@ -69,6 +69,13 @@
     </form>
   </BaseModal>
   <Terminos v-if="showTermsModal" @cerrar="showTermsModal = false" />
+
+  <VerificarCodigo 
+    v-if="currentModal === 'verify-code'"
+    @cerrar="toggleModal('register')"
+    @switch-to-verify-code="toggleModal('verify-code')"
+/>
+
 </template>
 
 <script>
@@ -76,7 +83,8 @@ import { ref } from 'vue'
 import BaseModal from './BaseModal.vue'
 import Terminos from './Terminos.vue'
 import IniciarSesion from './IniciarSesion.vue'
-import Codigo from './Codigo.vue'
+import VerificarCodigo from './VerificarCodigo.vue'
+
 
 export default {
   name: 'Cuenta',
@@ -84,9 +92,9 @@ export default {
     BaseModal,
     Terminos,
     IniciarSesion,
-    Codigo
+    VerificarCodigo
   },
-  emits: ['cerrar', 'switch-to-login'],
+  emits: ['cerrar', 'switch-to-login','switch-to-verify-code'],
   data() {
     return {
       email: '',
@@ -95,8 +103,7 @@ export default {
       telefono: '',
       termsAccepted: false,
       showTermsModal: false,
-      showIniciarSesion: false,
-      showCodigo: false
+      currentModal: null
     }
   },
   methods: {
@@ -110,6 +117,7 @@ export default {
         email: this.email,
         telefono: this.telefono
       });
+      this.currentModal = 'verify-code';
     },
     openTermsModal() {
       console.log("Abriendo el modal de términos");
@@ -119,16 +127,8 @@ export default {
       console.log("Cerrando modal de términos");
       this.showTermsModal = false;
     },
-    closeIniciarSesion() {
-      this.showIniciarSesion = false;
-    },
-    openIniciarSesion() {
-      this.showIniciarSesion = true;
-      this.closeTermsModal();
-    },
-    closeCodigo() {
-      console.log("Cerrando modal codigo");
-      this.showCodigo = false;
+    toggleModal(modalName) {
+      this.currentModal = this.currentModal === modalName ? null : modalName;
     }
   }
 }
