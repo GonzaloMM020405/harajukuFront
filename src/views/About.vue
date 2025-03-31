@@ -1,57 +1,61 @@
 <template>
+<div>
   <div>
-    <h1>About</h1>
-    <p>Pagina de info</p>
-
-<div id="gallery" class="relative w-full" data-carousel="slide">
-    <!-- Carousel wrapper -->
-    <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
-         <!-- Item 1 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" class="absolute block max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="">
-        </div>
-        <!-- Item 2 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item="active">
-            <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" class="absolute block max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="">
-        </div>
-        <!-- Item 3 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg" class="absolute block max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="">
-        </div>
-        <!-- Item 4 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg" class="absolute block max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="">
-        </div>
-        <!-- Item 5 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <img src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg" class="absolute block max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="">
-        </div>
-    </div>
-    <!-- Slider controls -->
-    <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
-            </svg>
-            <span class="sr-only">Previous</span>
-        </span>
-    </button>
-    <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-            </svg>
-            <span class="sr-only">Next</span>
-        </span>
-    </button>
-</div>
-
+   <Carousel />      
   </div>
+
+  <!-- Sección de las opiniones -->
+  <div v-for="(opinion, index) in opiniones" :key="index" class="max-w-lg mx-auto bg-white shadow-lg rounded-xl p-8 text-center mb-6">
+    
+    <!-- Imagen -->
+    <img :src="opinion.imagen" alt="Foto de perfil" class="w-20 h-20 rounded-full object-cover mx-auto">
+
+    <!-- Calificación -->
+    <div class="flex items-center justify-center gap-1 text-sm text-gray-700 my-3">
+      <i v-for="n in 5" :key="n" 
+         :class="[
+           n <= Math.floor(opinion.rating) ? 'fas' : 'far', 
+           'fa-star text-black'
+         ]">
+      </i>
+      <span class="ml-1 font-medium">{{ opinion.rating }}</span>
+    </div>
+
+    <!-- Texto -->
+    <p class="text-gray-800 text-base">{{ opinion.texto }}</p>
+
+  </div>  
+</div>
 </template>
 
 <script>
+import Carousel from '../views/components/Carousel.vue'
 
 export default {
   name: 'Home',
+  components: {
+    Carousel
+  },
+  data(){
+    return {
+        opiniones: [
+        {
+          imagen: 'https://cloudfront-eu-central-1.images.arcpublishing.com/prisa/XWB2UK4N5VEMJHEFJMFI5BQK6A.jpg',
+          rating: 4.4,
+          texto: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dui vel morbi cursus sed sodales molestie proin dictum gravida. Porttitor maecenas tincidunt ipsum semper malesuada.'
+        },
+        {
+          imagen: 'https://i1.sndcdn.com/artworks-000027094452-enfate-t500x500.jpg',
+          rating: 5.0,
+          texto: 'Excelente servicio y atención, ¡recomendado totalmente!'
+        },
+        {
+          imagen: 'https://i.pinimg.com/originals/c5/0b/b6/c50bb6072facf3c7fecf7816bcb3f6c7.jpg',
+          rating: 4.0,
+          texto: 'Buen servicio, aunque podría mejorar en ciertos aspectos.'
+        }
+      ]
+    }  
+  }
 }
 </script>

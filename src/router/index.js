@@ -7,6 +7,7 @@ import Appointment from '../views/Appointment.vue'
 import Gallery from '../views/Gallery.vue'
 import Location from '../views/Location.vue'
 
+
 const routes = [
   { path: '/', name: 'Home', component: Home },
   { path: '/about', name: 'About', component: About },
