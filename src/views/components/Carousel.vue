@@ -4,18 +4,18 @@
 <template>
 <div id="default-carousel" class="relative w-full" data-carousel="slide">
   <!-- Carousel wrapper -->
-  <div class="relative h-96 overflow-hidden rounded-lg md:h-[500px] bg-gradient-to-r from-blue-200 to-blue-800">
+  <div class="relative h-96 overflow-hidden rounded-lg md:h-[500px] bg-gradient-to-r from-blue-200 to-blue-800 b-4">
     <!-- Items del carrusel -->
-    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+    <div class="hidden duration-800 ease-in-out" data-carousel-item>
       <img src="https://lh3.googleusercontent.com/p/AF1QipMfC6o3WhsSwf4OjsVzkDT4XilZNKip72VwtaMI=s1360-w1360-h1020" class="absolute block w-full h-full object-contain -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
     </div>
-    <div class="hidden duration-700 ease-in-out" data-carousel-item>
-      <img src="https://lh5.googleusercontent.com/p/AF1QipNZtbDHp7-FxkGDXEb8vb7gsG3W2l6UJyrDYdz1=w101-h101-n-k-no-nu" class="absolute block w-full h-full object-contain -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+    <div class="hidden duration-800 ease-in-out" data-carousel-item>
+      <img src="https://scontent.fslw1-1.fna.fbcdn.net/v/t51.75761-15/465738027_17968261241798023_1299735505795630312_n.jpg?_nc_cat=100&amp;ccb=1-7&amp;_nc_sid=127cfc&amp;_nc_eui2=AeG1f9paomuydomqRCA7A-2cEEOr3FNLyREQQ6vcU0vJEdjpe_1WOgUZ7L1yt5AuozgcShlUW7MSZFak-_DFgphG&amp;_nc_ohc=JQ-F3s3Yx70Q7kNvgHc9M8Z&amp;_nc_oc=Adl9s1QlIIDEZWaNFUX5hkiRz9jsphSe_kg26_kVTpJAOY-KIjPLQFZt5MYx2qgLs47QPk7XT9lQggALML95Xmjr&amp;_nc_zt=23&amp;_nc_ht=scontent.fslw1-1.fna&amp;_nc_gid=tnblbLOQ2r6QFo0_irddmw&amp;oh=00_AYG1svUdM-JlUv3ewlVxBypWLnWumKGOuga8LjH9Js8wqQ&amp;oe=67EFF3B1" class="absolute block w-full h-full object-contain -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
     </div>
-    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+    <div class="hidden duration-800 ease-in-out" data-carousel-item>
       <img src="https://lh3.googleusercontent.com/p/AF1QipNm0tBXDe-uj0W_POmzp-YXX5D_k8vgT-Bk4E0f=s1360-w1360-h1020" class="absolute block w-full h-full object-contain -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
     </div>
-    <div class="hidden duration-700 ease-in-out" data-carousel-item>
+    <div class="hidden duration-800 ease-in-out" data-carousel-item>
       <img src="https://lh3.googleusercontent.com/p/AF1QipMwa-kxPwlE7HFWcQYDgiUVhWWiU1PGKL6F4NJ5=s1360-w1360-h1020" class="absolute block w-full h-full object-contain -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
     </div>
   </div>

@@ -7,7 +7,7 @@
           <img 
             src="/public/iconos/hara.png" 
             alt="Imagen de modal"
-            class="w-full h-auto object-contain rounded-2xl shadow-lg"
+            class="w-full h-auto object-contain"
           />  
         </div>
         

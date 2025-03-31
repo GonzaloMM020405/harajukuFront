@@ -1,6 +1,6 @@
 <template>
   <link rel="icon" href="/public/iconos/favicon.ico" />
-  <div class="min-h-full">        
+  <div class="min-h-full">  
     <Disclosure as="nav" class="bg-gray-800 mb-14" v-slot="{ open }">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
@@ -64,6 +64,7 @@
             </DisclosureButton>
           </div>
         </div>
+
       </div>
 
       <DisclosurePanel class="md:hidden ">
@@ -87,8 +88,14 @@
           </div>
         </div>
       </DisclosurePanel>
+      <Banner/>      
     </Disclosure>
-    
+    <header class="bg-white shadow">
+       
+      <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <h1 class="text-3xl font-bold tracking-tight text-gray-900">Saloncito Harajuku</h1>
+      </div>
+    </header>
 
     <IniciarSesion 
     v-if="modals.currentModal === 'login'"
@@ -100,23 +107,18 @@
     @cerrar="toggleModal('register')"
     @switch-to-login="toggleModal('login')"
     />
-    
+        
 
-    <header class="bg-white shadow">
-      <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        <h1 class="text-3xl font-bold tracking-tight text-gray-900">Saloncito Harajuku</h1>
-      </div>
-    </header>
     <main>
       <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <!-- Aqui agregue el router-view -->
         <router-view></router-view>
         <Carousel />
       </div>
+      
     </main>
-
-<!--Aqui Agregue el banner-->
-<Banner />
+    <Footer/>
+  
   </div>
 </template>
 
@@ -130,7 +132,7 @@ import BaseModal from './views/components/BaseModal.vue'
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 import Carousel  from './views/components/Carousel.vue'
-
+import Footer from './views/components/Footer.vue'
 //estados del modal para login
 const modals = ref({
   currentModal: null // 'login', 'register'
