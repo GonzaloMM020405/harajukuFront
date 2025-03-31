@@ -1,7 +1,7 @@
 <template>
   <BaseModal @close="$emit('cerrar')">
     <h2 class="text-2xl font-bold text-gray-700 mb-4">Iniciar Sesión</h2>
-    <form @submit.prevent="handleLogin" class="space-y-4">
+    <form @submit.prevent="handleSubmit" class="space-y-4">
       <label class="block">
         <span class="text-gray-600 font-medium">Email:</span>
         <input 
@@ -44,23 +44,45 @@
 </template>
 
 <script>
+import { LoginService } from "../../../src/lib/application/autenticarUsuario/autenticarUsuario.js"
 import BaseModal from './BaseModal.vue';
+import { useToast } from 'vue-toastification'
 
 export default {
   name: 'IniciarSesion',
   components: { BaseModal },
-  emits: ['cerrar', 'switch-to-register'],
+  emits: ['cerrar', 'switch-to-register', 'login-success'],
   data() {
     return {
       email: '',
       password: '',
       showTermsModal: false,
-      showIniciarSesion: false
+      showIniciarSesion: false,
     }
   },
+  setup() {
+    const toast = useToast();
+    return { toast };
+  },
   methods: {
-    handleLogin() {
-      console.log("Inicio sesión:", { email: this.email });
+      async handleSubmit() {
+        if (!this.email || !this.password) {
+        this.toast.error('Por favor completa todos los campos');
+        return;
+      }
+          try {
+            const loginService = new LoginService();            
+            const { usuario, token } = await loginService.login(this.email, this.password, this.$store); //llama al servicio de login para autenticar al usuario
+            console.log(usuario);
+            localStorage.setItem('token', token); //almacena el token en el local storage
+            this.toast.success('Inicio de sesión exitoso');
+        } catch (error) {
+          if (error.response && error.response.status === 401) {
+            this.toast.error("Email o contraseña incorrectos");  
+          } else {
+            this.toast.error("Ocurrió un error en el inicio de sesión");  
+          }
+        }
     },
     openRecoverPass() {
       console.log("Abriendo el modal de recuperación de contraseña");
