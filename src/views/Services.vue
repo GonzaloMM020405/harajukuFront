@@ -26,7 +26,10 @@
       </svg>
     </button>
 
-    <BaseModal v-if="isModalOpen" @cerrar="closeModal">
+  </div>
+
+  <!-- Modal para cotizar -->
+    <div v-if="isModalOpen" @cerrar="closeModal">
   <div class="max-w-lg mx-auto p-6">
     <h2 class="text-2xl font-bold text-gray-800 mb-2 text-center">¡Cotiza tu servicio!</h2>
     <p class="text-gray-500 text-center mb-6">
@@ -76,9 +79,7 @@
 
     </form>
   </div>
-</BaseModal>
-  </div>
-
+</div>
   <!-- Botón grande azul inferior -->
   <button class="bg-blue-500 hover:bg-blue-600 transition duration-300 text-white font-semibold px-12 py-4 rounded-xl shadow-lg">
     Ver mis cotizaciones
