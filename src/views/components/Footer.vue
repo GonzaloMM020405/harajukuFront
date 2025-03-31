@@ -1,7 +1,7 @@
 <template>
 <footer class="bg-blue-500 text-white py-10 px-4">
   <div class="max-w-screen-xl mx-auto text-center flex flex-col items-center">
-    <img src="/public/iconos/hara.png" alt="Logo" class="w-20 h-20 mb-4">
+    <img src="../../assets/iconos/hara.png" alt="Logo" class="w-20 h-20 mb-4">
     <h3 class="text-xl font-semibold">Saloncito Harajuku</h3>
     <p class="text-sm my-2">
       Cortes alternativos, coreanos, anime y <br> colores fantasía para todes 🌈

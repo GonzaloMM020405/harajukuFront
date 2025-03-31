@@ -5,7 +5,7 @@
         <!-- Sección Izquierda (Imagen) -->
         <div class="rounded-l-lg w-1/2 hidden sm:flex bg-white bg-opacity-80 items-center justify-center">
           <img 
-            src="/public/iconos/hara.png" 
+            src="../../assets/iconos/hara.png" 
             alt="Imagen de modal"
             class="w-full h-auto object-contain"
           />  

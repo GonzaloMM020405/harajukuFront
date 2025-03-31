@@ -4,7 +4,7 @@
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
           <div class="flex items-center">
-            <img class="size-8 rounded-full" src="/public/iconos/faviconMorade.ico" alt="Company" />
+            <img class="size-8 rounded-full" src="./assets/iconos/faviconMorade.ico" alt="Company">
             <div class="hidden md:block ml-10">
               <a v-for="item in navigation" :key="item.name" :href="item.href" 
                 :class="[item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 
@@ -17,7 +17,7 @@
           <div class="hidden md:block">
             <Menu as="div" class="relative ml-3">
               <MenuButton class="rounded-full bg-gray-800">
-                <img class="size-8 rounded-full" src="/public/iconos/favicon.ico" alt="" />
+                <img class="size-8 rounded-full" src="./assets/iconos/favicon.ico" alt="User">
               </MenuButton>
               <transition>
                 <MenuItems class="absolute right-0 z-10 mt-2 w-48 bg-white shadow-lg rounded-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
