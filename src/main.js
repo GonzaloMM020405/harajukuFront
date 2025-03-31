@@ -5,6 +5,10 @@ import router from './router'
 import '../node_modules/flowbite-vue/dist/index.css'
 import 'flowbite';
 import 'typeface-poppins';
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
 
-
-createApp(App).use(router).mount('#app')
+const app = createApp(App);
+app.use(router);
+app.use(Toast);
+app.mount("#app");

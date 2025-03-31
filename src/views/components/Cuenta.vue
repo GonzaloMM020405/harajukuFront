@@ -5,7 +5,7 @@
       <label class="block">
         <span class="text-gray-600 font-medium">Nombre Completo:</span>
         <input 
-          v-model="name" 
+          v-model="newUser.name" 
           type="text" 
           required 
           class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -15,27 +15,27 @@
       <label class="block">
         <span class="text-gray-600 font-medium">Email:</span>
         <input 
-          v-model="email" 
+          v-model="newUser.email" 
           type="email" 
           required 
           class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </label>
 
-      <label class="block">
+     <!-- <label class="block">
         <span class="text-gray-600 font-medium">Teléfono:</span>
         <input 
-          v-model="telefono" 
+          v-model="newUser.telefono" 
           type="tel" 
           required 
           class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-      </label>
+      </label> --> 
 
       <label class="block">
         <span class="text-gray-600 font-medium">Contraseña:</span>
         <input 
-          v-model="password" 
+          v-model="newUser.password" 
           type="password" 
           required 
           class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -79,7 +79,8 @@ import BaseModal from './BaseModal.vue'
 import Terminos from './Terminos.vue'
 import IniciarSesion from './IniciarSesion.vue'
 import VerificarCodigo from './VerificarCodigo.vue'
-
+import { useToast } from 'vue-toastification'
+import { RegisterUser } from '../../../src/lib/application/registrarUsuario/registrarUsuario.js'
 
 export default {
   name: 'Cuenta',
@@ -92,27 +93,45 @@ export default {
   emits: ['cerrar', 'switch-to-login','switch-to-verify-code'],
   data() {
     return {
-      email: '',
-      password: '',
-      name: '',
+      newUser: {
+        name: '',
+        email: '',
+        password: ''
+      },
       telefono: '',
       termsAccepted: false,
       showTermsModal: false,
-      currentModal: null
+      currentModal: null,
+      usersService: new RegisterUser(),
     }
   },
+  setup() {
+    const toast = useToast();
+    return { toast };
+  },
   methods: {
-    handleSubmit() {
-      if (!this.termsAccepted) {
-        alert("Debes aceptar los términos y condiciones antes de continuar.")
+  async handleSubmit() {
+      try {
+        if (!this.termsAccepted) {
+        this.$toast.error("Debes aceptar los términos y condiciones antes de continuar.");
         return;
+      };
+        await this.usersService.addUser(this.newUser);
+        this.toast.success('Usuario agregado con éxito');
+        console.log('Usuario agregado con éxito');
+        this.$emit('cerrar');
+      } catch (error) {
+      // Muestra el mensaje de error específico del backend
+      this.toast.error(error.message || 'Error al registrar usuario');
+      
+      // Opcional: manejo específico por código de estado
+      if (error.status === 409) {
+        this.toast.error("El correo ya está registrado");
+      } else if (error.status === 500) {
+        console.error('Error del servidor:', error);
       }
-      console.log("Cuenta creada con:", {
-        name: this.name,
-        email: this.email,
-        telefono: this.telefono
-      });
-      this.$emit('switch-to-verify-code');
+    }
+      //this.$emit('switch-to-verify-code');
     },
     openTermsModal() {
       console.log("Abriendo el modal de términos");

@@ -26,12 +26,14 @@
 <script>
 import { ref, defineComponent } from 'vue'
 import BaseModal from './BaseModal.vue'
+import { useToast } from 'vue-toastification'
 
 export default defineComponent({
   components: { BaseModal },
   emits: ['cerrar'],
   setup() {
     const code = ref("");
+    const toast = useToast()
 
     const validateInput = (event) => {
       // Permitir solo números y limitar a 6 caracteres
@@ -40,8 +42,8 @@ export default defineComponent({
 
     const validateCode = () => {
       if (code.value.length !== 6) {
-        alert("El código debe tener exactamente 6 dígitos.");
-        return;
+        toast.error("El código debe tener exactamente 6 dígitos.");
+       return;
       }
       console.log("Código validado:", code.value);
     };
