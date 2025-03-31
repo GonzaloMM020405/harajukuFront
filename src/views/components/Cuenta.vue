@@ -70,12 +70,7 @@
   </BaseModal>
   <Terminos v-if="showTermsModal" @cerrar="showTermsModal = false" />
 
-  <VerificarCodigo 
-    v-if="currentModal === 'verify-code'"
-    @cerrar="toggleModal('register')"
-    @switch-to-verify-code="toggleModal('verify-code')"
-/>
-
+ 
 </template>
 
 <script>
@@ -117,7 +112,7 @@ export default {
         email: this.email,
         telefono: this.telefono
       });
-      this.currentModal = 'verify-code';
+      this.$emit('switch-to-verify-code');
     },
     openTermsModal() {
       console.log("Abriendo el modal de términos");
