@@ -117,17 +117,20 @@ export default {
         return;
       };
         await this.usersService.addUser(this.newUser);
-        toast.success('Usuario agregado con éxito');
+        this.toast.success('Usuario agregado con éxito');
         console.log('Usuario agregado con éxito');
-        this.closeAddUserModal();
-        await this.loadUsers();
+        this.$emit('cerrar');
       } catch (error) {
-        if (error.response && error.response.status === 409) {
-          toast.error("Error: El correo de usuario ingresado ya existe");
-        } else {
-          console.error('Error al agregar usuario:', error);
-        }
+      // Muestra el mensaje de error específico del backend
+      this.toast.error(error.message || 'Error al registrar usuario');
+      
+      // Opcional: manejo específico por código de estado
+      if (error.status === 409) {
+        this.toast.error("El correo ya está registrado");
+      } else if (error.status === 500) {
+        console.error('Error del servidor:', error);
       }
+    }
       //this.$emit('switch-to-verify-code');
     },
     openTermsModal() {

@@ -4,7 +4,7 @@ export class LoginService {
     async login(email, password, store) {
       try {
         // Realiza la solicitud de autenticación
-        const { data } = await axios.post('/v1/users/login', { email, password });
+        const { data } = await axios.post(`/v1/users/login`, { email, password });
   
         // Verifica si la respuesta y los datos existen
         if (!data || !data.usuario || !data.token) {

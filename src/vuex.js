@@ -47,10 +47,8 @@ const store = createStore({
       logout({ commit }) {
         commit('SET_USER', null);
         commit('SET_TOKEN', null);
-        commit('SET_PERMISOS', []); // Limpia los permisos al cerrar sesión
         localStorage.removeItem('token');
         localStorage.removeItem('usuario');
-        localStorage.removeItem('permisos'); // Limpia permisos al cerrar sesión
       },
     },
     mutations: {
