@@ -1,5 +1,29 @@
-# Vue 3 + Vite
+# HARAJUKU FRONTEND
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## Configura el ambiente de desarrollo
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+### Versiones de herramientas
+| Herramienta  | Versión |
+| ------------- | ------------- |
+| Node.js  | V20.13.1  |
+| npm  | 10.9.2  |
+| Vue CLI  | @vue/cli 5.0.8  |
+
+1. Clonar el repositorio:
+```sh
+git clone https://github.com/GonzaloMM020405/harajukuFront.git
+cd ews_frontend
+```
+2. Instala `Node.js` de la [página oficial](https://nodejs.org/es).
+3. Instala `Vue CLI` globalmente:
+```sh
+npm install -g @vue/cli@5.0.8
+```
+5. Entra al proyecto e instala las dependencias
+```sh
+npm install
+```
+4. Verificar que funciona correctamente:
+```sh
+npm run dev
+```
