@@ -12,7 +12,7 @@
 1. Clonar el repositorio:
 ```sh
 git clone https://github.com/GonzaloMM020405/harajukuFront.git
-cd ews_frontend
+cd harajuku-front
 ```
 2. Instala `Node.js` de la [página oficial](https://nodejs.org/es).
 3. Instala `Vue CLI` globalmente:
