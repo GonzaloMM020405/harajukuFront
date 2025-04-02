@@ -116,6 +116,12 @@ export default {
         this.$toast.error("Debes aceptar los términos y condiciones antes de continuar.");
         return;
       };
+
+      if (this.newUser.password.length < 8) {
+        this.toast.error('La contraseña debe tener al menos 8 caracteres');
+        return;
+      }
+
         await this.usersService.addUser(this.newUser);
         this.toast.success('Usuario agregado con éxito');
         console.log('Usuario agregado con éxito');
