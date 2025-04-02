@@ -17,8 +17,16 @@
           <div class="hidden md:block">
             <Menu as="div" class="relative ml-3">
               <MenuButton class="rounded-full bg-gray-800">
-                <img class="size-8 rounded-full" src="./assets/iconos/favicon.ico" alt="User">
+                <div class="flex items-center">
+                  <!-- Imagen del usuario -->
+                  <img class="size-8 rounded-full" src="https://harajuku.s3.us-east-2.amazonaws.com/user.jpg" alt="User" />
+                  <!-- Nombre y correo del usuario -->
+                  <div class="ml-2 text-white text-sm">
+                    <span v-if="email" class="block">{{ email }}</span>
+                  </div>
+                </div>
               </MenuButton>
+
               <transition>
                 <MenuItems class="absolute right-0 z-10 mt-2 w-48 bg-white shadow-lg rounded-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                   <MenuItem v-for="item in userNavigation" :key="item.name " class="rounded-lg">
@@ -88,7 +96,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed, onMounted } from 'vue';
 import Cuenta from './views/components/Cuenta.vue'
 import IniciarSesion from './views/components/IniciarSesion.vue'
 import VerificarCodigo from './views/components/VerificarCodigo.vue'
@@ -97,8 +105,15 @@ import Carousel from './views/components/Carousel.vue'
 import Footer from './views/components/Footer.vue'
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
+import { useToast } from 'vue-toastification'
 
-const modalActual = ref(null)
+const store = useStore();
+const router = useRouter();
+const modalActual = ref(null);
+const email = computed(() => localStorage.getItem('email') || null);
+
 
 const abrirModal = (nombreModal) => {
   modalActual.value = nombreModal
@@ -108,10 +123,6 @@ const cerrarModal = () => {
   modalActual.value = null
 }
 
-const user = {
-  name: 'Tom Cook',
-  email: 'tom@example.com'
-}
 
 const navigation = [
   { name: 'Acerca de Nosotros', href: '/about', current: true },
@@ -121,10 +132,31 @@ const navigation = [
   { name: 'Ubicación', href: '/location', current: false },
 ]
 
-const userNavigation = [
-  { name: 'Tu Perfil', href: '#' },
-  { name: 'Iniciar Sesión', action: () => abrirModal('login') },
-  { name: 'Crear Cuenta', action: () => abrirModal('register')},
-  { name: 'Cerrar Sesión', href: '#' }
-]
+const isAuthenticated = computed(() => !!localStorage.getItem('token') || !!store.state.token);
+
+const userNavigation = computed(() => [
+  isAuthenticated.value && { name: 'Tu Perfil', href: '#' },
+  !isAuthenticated.value && { name: 'Iniciar Sesión', action: () => abrirModal('login') },
+  !isAuthenticated.value && { name: 'Crear Cuenta', action: () => abrirModal('register') },
+  isAuthenticated.value && { name: 'Cerrar Sesión', action: logout }
+].filter(Boolean));
+
+const toast = useToast();
+
+const logout = () => {
+  store.dispatch('logout');
+  toast.success('Sesión cerrada exitosamente');
+  
+  setTimeout(() => {
+    router.push('/about').then(() => {
+      window.location.reload();
+    });
+  }, 1000);
+};
+
+
+
+onMounted(() => {
+  store.dispatch('initializeStore');
+});
 </script>

@@ -1,7 +1,10 @@
 <template>
 <div>
-  <div>
+  <!-- <div>
    <Carousel />      
+  </div -->
+  <div class="bg-gradient-to-tr from-blue-400 via-cyan-200 to-teal-300">
+    <Collage />
   </div>
 
   <header class="bg-white shadow">
@@ -36,11 +39,13 @@
 
 <script>
 import Carousel from '../views/components/Carousel.vue'
+import Collage from '../views/components/Collage.vue'
 
 export default {
   name: 'Home',
   components: {
-    Carousel
+    Carousel,
+    Collage
   },
   data(){
     return {

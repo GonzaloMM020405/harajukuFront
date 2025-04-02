@@ -47,6 +47,9 @@
 import { LoginService } from "../../../src/lib/application/autenticarUsuario/autenticarUsuario.js"
 import BaseModal from './BaseModal.vue';
 import { useToast } from 'vue-toastification'
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 export default {
   name: 'IniciarSesion',
@@ -61,27 +64,34 @@ export default {
     }
   },
   setup() {
-    const toast = useToast();
-    return { toast };
-  },
+  const toast = useToast();
+  const router = useRouter();
+  return { toast, router };
+},
   methods: {
       async handleSubmit() {
         if (!this.email || !this.password) {
-        this.toast.error('Por favor completa todos los campos');
-        return;
-      }
+          this.toast.error('Por favor completa todos los campos');
+          return;
+        }
+
+        if (this.password.length < 8) {
+          this.toast.error('La contraseña debe tener al menos 8 caracteres');
+          return;
+        }
+
           try {
             const loginService = new LoginService();            
-            const { usuario, token } = await loginService.login(this.email, this.password, this.$store); //llama al servicio de login para autenticar al usuario
-            console.log(usuario);
+            const { token } = await loginService.login(this.email, this.password, this.$store); //llama al servicio de login para autenticar al usuario
             localStorage.setItem('token', token); //almacena el token en el local storage
             this.toast.success('Inicio de sesión exitoso');
+            this.router.push('/about').then(() => {
+              window.location.reload();
+            });
+            this.$emit('login-success');
         } catch (error) {
-          if (error.response && error.response.status === 401) {
-            this.toast.error("Email o contraseña incorrectos");  
-          } else {
-            this.toast.error("Ocurrió un error en el inicio de sesión");  
-          }
+          this.toast.error(error.message || "Ocurrió un error en el inicio de sesión");
+          console.error("Error en el inicio de sesión:", error);
         }
     },
     openRecoverPass() {
