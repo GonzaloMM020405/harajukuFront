@@ -10,7 +10,7 @@
     <div class="flex flex-col items-center justify-center gap-8 py-10 bg-gray-100">
 
   <!-- Tarjeta (card) -->
-  <div class="bg-white shadow-lg rounded-xl p-8 max-w-lg text-center">
+  <div v-if="role === 'client'" class="bg-white shadow-lg rounded-xl p-8 max-w-lg text-center">
     <h2 class="text-2xl font-bold text-gray-800 mb-2">
       Cotiza tu servicio ahora mismo
     </h2>
@@ -81,7 +81,7 @@
   </div>
 </div>
   <!-- Botón grande azul inferior -->
-  <button class="bg-blue-500 hover:bg-blue-600 transition duration-300 text-white font-semibold px-12 py-4 rounded-xl shadow-lg">
+  <button  v-if="role === 'client'" class="bg-blue-500 hover:bg-blue-600 transition duration-300 text-white font-semibold px-12 py-4 rounded-xl shadow-lg">
     Ver mis cotizaciones
   </button>
 
@@ -97,6 +97,11 @@ import BaseModal from '../views/components/BaseModal.vue'
 
 export default {
   name: 'Services',
+  computed: {
+    role() {
+      return this.$store.getters.getUserRole
+    }
+  },
   components: {
     Terminos,
     BaseModal
