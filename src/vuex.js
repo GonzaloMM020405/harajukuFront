@@ -6,6 +6,7 @@ const store = createStore({
       user: null,
       token: localStorage.getItem('token') || null,
       email: localStorage.getItem('email') || null,
+      role: localStorage.getItem('role') || null,
     },
     getters: {
       getUser: (state) => {
@@ -17,28 +18,35 @@ const store = createStore({
       getUserEmail: (state) => {
         return state.user && state.user.correo && state.user.correo.value ? state.user.correo.value : '';
       },
+      getUserRole: (state) => {
+        return state.role;
+      },
     },
     actions: {
       async initializeStore({ commit }) {
         const token = localStorage.getItem('token');
         const usuario = JSON.parse(localStorage.getItem('usuario'));
-        if (token && usuario) {
-          // Si el token y usuario existen en localStorage, actualiza el store
+        const role = localStorage.getItem('role');
+        if (token && usuario && role) {
           commit('SET_USER', usuario);
-          commit('SET_TOKEN', token);          
+          commit('SET_TOKEN', token);
+          commit('SET_ROLE', role);
         } else {
-          // Si no hay token o usuario, limpia el store
           commit('SET_USER', null);
           commit('SET_TOKEN', null);
+          commit('SET_ROLE', null);
           localStorage.removeItem('token');
           localStorage.removeItem('usuario');
+          localStorage.removeItem('role');
         }
       },
-      setUser({ commit }, { user, token }) {
+      setUser({ commit }, { user, token, role }) {
         commit('SET_USER', user);
         commit('SET_TOKEN', token);
+        commit('SET_ROLE', role);
         localStorage.setItem('token', token); 
         localStorage.setItem('usuario', JSON.stringify(user)); 
+        localStorage.setItem('role', role); 
       },
       setEmail({ commit }, email) {
         commit('SET_EMAIL', email);
@@ -61,6 +69,9 @@ const store = createStore({
       SET_EMAIL(state, email) {
         state.email = email;
       },
+      SET_ROLE(state, role) {
+        state.role = role;
+      }
     }
   });
 

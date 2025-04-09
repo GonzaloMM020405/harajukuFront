@@ -6,21 +6,20 @@ export class LoginService {
             // Realiza la solicitud de autenticación
             const { data } = await axios.post(`/v1/users/login`, { email, password });
 
-            // Verifica si la respuesta tiene éxito y contiene el token
-            if (!data || !data.data || !data.data.token) {
-              throw new Error("Datos de usuario o token no disponibles");
-          }
-          
+            if (!data || !data.data || !data.data.token || !data.data.role) {
+                throw new Error("Datos de usuario, token o rol no disponibles");
+            }
 
             // Extraer el token correctamente
-            const { token } = data.data;
+            const { token, role } = data.data;
 
             // Guardar el token en localStorage
             localStorage.setItem('token', token);
-            localStorage.setItem('email', email);  // Guardar el email si es necesario
+            localStorage.setItem('email', email);
+            localStorage.setItem('role', role)
 
             // Almacenar usuario y token en el store (si es necesario)
-            store.dispatch('setUser', { user: email, token });
+            store.dispatch('setUser', { user: email, token, role });
 
             // Retorna el token correctamente
             return { token };
