@@ -3,7 +3,17 @@
     <h2 class="text-2xl font-bold text-gray-700 mb-4">Crea tu cuenta gratuita</h2>
     <form @submit.prevent="handleSubmit" class="space-y-4">
       <label class="block">
-        <span class="text-gray-600 font-medium">Nombre Completo:</span>
+        <span class="text-gray-600 font-medium">Nombre:</span>
+        <input 
+          v-model="newUser.name" 
+          type="text" 
+          required 
+          class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </label>
+
+      <label class="block">
+        <span class="text-gray-600 font-medium">Apellido:</span>
         <input 
           v-model="newUser.name" 
           type="text" 
@@ -95,6 +105,7 @@ export default {
     return {
       newUser: {
         name: '',
+        lastName: '',
         email: '',
         password: ''
       },

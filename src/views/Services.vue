@@ -142,14 +142,17 @@
       </div>
     </div>
   </div>
+ 
+
 </template>
 
 <script>
 import Terminos from '../views/components/Terminos.vue'
 
+
 export default {
   name: 'Services',
-  components: { Terminos },
+  components: { Terminos},
   emits: ['cerrar'],
   data() {
     return {
