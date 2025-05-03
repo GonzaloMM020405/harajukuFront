@@ -5,6 +5,7 @@ export class RegisterUser {
         try {
             const payload = {
               name: user.name,
+              lastName: user.lastName,
               email: user.email,
               password: user.password,
             };

@@ -40,7 +40,7 @@
       Llena este formulario y adjunta una imagen de referencia del estilo que quieres tomar.
     </p>
 
-    <form class="space-y-4">
+    
       
       <!-- Tipo de servicio -->
       <div>
@@ -186,21 +186,24 @@
       </div>
     </div>
   </div>
-</div>
   <!-- Botón grande azul inferior -->
   <button  v-if="role === 'client'" class="bg-blue-500 hover:bg-blue-600 transition duration-300 text-white font-semibold px-12 py-4 rounded-xl shadow-lg">
     Ver mis cotizaciones
   </button>
+</div>
+  
 
+  </div>
+<TablaCotizaciones/>
 </template>
 
 <script>
 import Terminos from '../views/components/Terminos.vue'
-
+import TablaCotizaciones from '../views/components/TablaCotizaciones.vue' 
 
 export default {
   name: 'Services',
-  components: { Terminos},
+  components: { Terminos,TablaCotizaciones},
   emits: ['cerrar'],
   computed: {
     role() {
@@ -208,8 +211,7 @@ export default {
     }
   },
   components: {
-    Terminos,
-    BaseModal
+    Terminos
   },
   data() {
     return {
