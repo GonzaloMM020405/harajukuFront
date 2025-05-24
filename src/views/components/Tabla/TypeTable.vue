@@ -3,6 +3,7 @@
     <table class="w-full text-sm text-left text-gray-500">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50">
         <tr>
+          <th class="px-6 py-3">Seleccionar</th>
           <th class="px-6 py-3">Nombre</th>
           <th class="px-6 py-3">Precio</th>
           <th class="px-6 py-3">Editar</th>

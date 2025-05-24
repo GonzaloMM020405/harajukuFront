@@ -47,10 +47,6 @@
 import { LoginService } from "../../../src/lib/application/autenticarUsuario/autenticarUsuario.js"
 import BaseModal from './BaseModal.vue';
 import { useToast } from 'vue-toastification'
-import { useRouter } from 'vue-router';
-
-const router = useRouter();
-
 export default {
   name: 'IniciarSesion',
   components: { BaseModal },
@@ -61,13 +57,9 @@ export default {
       password: '',
       showTermsModal: false,
       showIniciarSesion: false,
+      toast: useToast()
     }
   },
-  setup() {
-  const toast = useToast();
-  const router = useRouter();
-  return { toast, router };
-},
   methods: {
       async handleSubmit() {
         if (!this.email || !this.password) {
@@ -85,7 +77,7 @@ export default {
             const { token } = await loginService.login(this.email, this.password, this.$store); //llama al servicio de login para autenticar al usuario
             localStorage.setItem('token', token); //almacena el token en el local storage
             this.toast.success('Inicio de sesión exitoso');
-            this.router.push('/about').then(() => {
+            this.$router.push('/about').then(() => {
               window.location.reload();
             });
             this.$emit('login-success');

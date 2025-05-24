@@ -16,6 +16,8 @@ export class TypeOfServiceService {
         },
       });
 
+      console.log('Response data:', data);
+
       return {
         meta:  data.data.meta,
         items: data.data.typeOfServices,
@@ -43,25 +45,29 @@ export class TypeOfServiceService {
   }
 
   // PATCH
-  async updateType({ id, name, price }) {
-    try {
-      if (!id) throw new Error('ID de tipo de servicio no proporcionado');
+async updateType({ id, name, price }) {
+  try {
+    if (!id) throw new Error('ID de tipo de servicio no proporcionado');
 
-      let url = `/v1/typesofservice?id=${encodeURIComponent(id)}`;
-      if (name  !== undefined) url += `&name=${encodeURIComponent(name)}`;
-      if (price !== undefined) url += `&price=${encodeURIComponent(price)}`;
+    const url = `/v1/typesofservice?id=${encodeURIComponent(id)}`;
 
-      const { data } = await axios.patch(url, null, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
-      return data.data;
-    } catch (error) {
-      console.error('Error updating type of service:', error.response?.data || error);
-      throw error;
-    }
+    const body = {};
+    if (name !== undefined) body.name = name;
+    if (price !== undefined) body.price = price;
+
+    const { data } = await axios.put(url, body, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    });
+
+    return data.data;
+  } catch (error) {
+    console.error('Error updating type of service:', error.response?.data || error);
+    throw error;
   }
+}
+
 
   // DELETE
   async deleteType(id) {
@@ -74,6 +80,20 @@ export class TypeOfServiceService {
       return data;
     } catch (error) {
       console.error('Error deleting type of service:', error.response?.data || error);
+      throw error;
+    }
+  }
+
+  async getTypeById(id) {
+    try {
+      const { data } = await axios.get(`/v1/typesofservice/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+      return data.data;
+    } catch (error) {
+      console.error('Error fetching type of service by ID:', error.response?.data || error);
       throw error;
     }
   }

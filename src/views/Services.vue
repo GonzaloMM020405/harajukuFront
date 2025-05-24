@@ -127,15 +127,12 @@
 
       
       <router-link 
-      v-if="role === 'client'" 
-      to="/services/vercotizacion"
+      to="/services/TipoServicios"
       class="bg-blue-500 hover:bg-blue-600 transition duration-300 text-white font-semibold px-12 py-4 rounded-xl shadow-lg"
     >
-      Ver mis cotizaciones
+      Administrar tipos de servicios
     </router-link>
     </div>
-   <!-- Contenedor principal -->
-   <TipoServicios/>
   </div>
 </template>
 
@@ -162,7 +159,9 @@ export default {
         description: ''
       },
       images: [],
-      maxImages: 5
+      maxImages: 5,
+      skip: 0,
+      limit: 10,
     };
   },
   computed: {
@@ -178,8 +177,7 @@ export default {
        try {
          this.loadingTypes = true;
          // como solo necesitamos el listado completo, ponemos skip=1, limit=1000
-         const email = this.$store.getters.getUserEmail;
-         const { items } = await this.typeService.getTypes(email, 1, 1000, '');
+         const { items } = await this.typeService.getTypes(1, 1000, '');
          this.typeOptions = items;                 // [{id, name, price}, …]
        } catch (err) {
          console.error('Error cargando tipos:', err);

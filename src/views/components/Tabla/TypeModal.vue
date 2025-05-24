@@ -28,7 +28,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-
+import { useToast } from 'vue-toastification';
 import { TypeOfServiceService } from '../../../lib/application/tipoServicio/typeOfService';
 
 //ola gonsal no lo queria dejar asi pero saliendo del trabajo t ayudopo
@@ -36,14 +36,15 @@ import { TypeOfServiceService } from '../../../lib/application/tipoServicio/type
 export default {
   props: { typeToEdit: Object },
   
-  data() {
-    return {
-      name: this.typeToEdit?.name || '',
-      price: this.typeToEdit?.price || 0,
-      saving: false,
-      service: new TypeOfServiceService(),
-    };
-  },
+data() {
+  return {
+    name: this.typeToEdit?.name || '',
+    price: this.typeToEdit?.price || 0,
+    saving: false,
+    service: new TypeOfServiceService(),
+    toast: useToast(),
+  };
+},
   methods: {
     async save() {
       this.saving = true;
@@ -55,10 +56,12 @@ export default {
             name: this.name.trim(),
             price: this.price,
           });
+          this.toast.success('Tipo de servicio actualizado correctamente');
         } else {
           // crear
           //guardar en variable
           await this.service.addType({ name: this.name.trim(), price: this.price });
+                this.toast.success('Tipo de servicio creado correctamente');
         }
         this.$emit('saved');
       } catch (err) {

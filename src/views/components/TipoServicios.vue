@@ -11,14 +11,23 @@
       <button class="btn-primary" @click="showAddModal = true">
         Nuevo tipo de servicio
       </button>
+      <button
+  v-if="selectedIds.length"
+  @click="deleteSelected"
+  class="mb-4 px-4 py-2 bg-red-600 text-white font-semibold rounded hover:bg-red-700 transition"
+>
+  Eliminar seleccionados ({{ selectedIds.length }})
+</button>
+
     </div>
 
-    <TypeTable
-      :types="types"
-      :selectedIds="selectedTypes"
-      @updateSelected="selectedTypes = $event"
-      @editType="editType"
-    />
+<TypeTable
+  :types="types"
+  :selectedIds="selectedIds" 
+  @updateSelected="selectedIds = $event"
+  @editType="editType"
+/>
+
 
     <!-- paginación -->
     <div class="mt-4 flex justify-between">
@@ -50,13 +59,13 @@ export default {
     return {
       searchQuery: '',
       types: [],
-      selectedTypes: [],
       currentPage: 1,
       limit: 10,
       isLastPage: false,
       showAddModal: false,
       editingType: null,
       typeService: new TypeOfServiceService(),
+      selectedIds: [],
     };
   },
   mounted() {
@@ -77,6 +86,23 @@ export default {
         console.error('Error loading types:', err);
       }
     },
+    updateSelected(list) {
+  this.selectedIds = list;
+},
+async deleteSelected() {
+  if (!this.selectedIds.length) return;
+
+  const confirmed = confirm('¿Estás seguro de que deseas eliminar los tipos seleccionados?');
+  if (!confirmed) return;
+
+  try {
+    await Promise.all(this.selectedIds.map(id => this.typeService.deleteType(id)));
+    this.selectedIds = [];
+    await this.loadTypes(); // Recarga la lista
+  } catch (error) {
+    console.error('Error eliminando tipos:', error);
+  }
+},
     next() {
       if (!this.isLastPage) {
         this.currentPage += 1;
