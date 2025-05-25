@@ -132,6 +132,13 @@
     >
       Administrar tipos de servicios
     </router-link>
+
+    <router-link 
+      to="/services/Disponibilidad"
+      class="bg-blue-500 hover:bg-blue-600 transition duration-300 text-white font-semibold px-12 py-4 rounded-xl shadow-lg"
+    >
+      Administrar Horarios Disponibles
+    </router-link>
     </div>
   </div>
 </template>

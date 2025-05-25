@@ -10,6 +10,7 @@ import { useToast } from "vue-toastification";
 const toast = useToast();
 
 import TipoServicios from '../views/components/TipoServicios.vue'
+import Disponibilidad from '../views/components/Availability/Availability.vue'
 
 const routes = [
   {
@@ -29,7 +30,11 @@ const routes = [
     name: 'TipoServicios', 
     component: TipoServicios, // cliente y administrador ven la misma ruta
   },
-  {
+  { 
+    path: '/services/Disponibilidad', 
+    name: 'Disponibilidad', 
+    component: Disponibilidad, 
+  },  {
     path: '/appointment',
     name: 'Appointment',
     component: () => import('../views/Appointment.vue'),
