@@ -30,6 +30,11 @@ const routes = [
     component: TipoServicios, // cliente y administrador ven la misma ruta
   },
   {
+    path: '/services/mis-cotizaciones',
+    name: 'MisCotizaciones',
+    component: () => import('../views/components/cotizaciones/QuotationList.vue'),
+  },
+  {
     path: '/appointment',
     name: 'Appointment',
     component: () => import('../views/Appointment.vue'),

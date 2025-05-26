@@ -3,9 +3,14 @@ import axios from '../infraestructura/http/axios';
 export class ServicioCotizaciones {
   async getCotizaciones(skip, limit) {
     try {
+      const token = localStorage.getItem('token');
       let url = `/v1/quotes/all?skip=${skip}&limit=${limit}`;
-      const response = await axios.get(url);
-      return response.data;
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data.data.quotes || []
     } catch (error) {
       console.error("Error al obtener cotizaciones:", error);
       throw error;
@@ -101,7 +106,7 @@ export class ServicioCotizaciones {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
-      return response.data;
+      return response.data.data;
     } catch (error) {
       console.error("Error al obtener cotización por ID:", error.response?.data || error);
       throw error;

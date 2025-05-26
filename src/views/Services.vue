@@ -83,9 +83,16 @@
       </button>
     </form>
   </div>
-
-      
+      <!--Clic para ver las cotizaciones-->
       <router-link 
+      to="/services/mis-cotizaciones"
+      class="bg-blue-500 hover:bg-blue-600 transition duration-300 text-white font-semibold px-12 py-4 rounded-xl shadow-lg"
+    >
+      Ver mis cotizaciones
+    </router-link>
+
+      <router-link
+      v-if="role === 'admin'" 
       to="/services/TipoServicios"
       class="bg-blue-500 hover:bg-blue-600 transition duration-300 text-white font-semibold px-12 py-4 rounded-xl shadow-lg"
     >
@@ -181,7 +188,7 @@ async function handleSubmit() {
 
 
 //Role management para mostrar las vistas 
-const role = ref('client')
+const role = ref('admin') // Cambia a 'admin' para ver la vista de administrador
 const isFormVisible = ref(false)
 function openModal() {
   isFormVisible.value = true
