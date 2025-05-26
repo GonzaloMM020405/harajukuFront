@@ -1,45 +1,77 @@
 <template>
-  <div>
-    <!-- buscador y botón “Nuevo” -->
-    <div class="flex justify-between mb-4">
-    <input v-model="startTime" type="datetime-local" class="input" />
-    <input v-model="endTime" type="datetime-local" class="input ml-2" />
-    <select v-model="isBooked" class="input ml-2">
-    <option :value="null">Todos</option>
-    <option :value="true">Reservados</option>
-    <option :value="false">Disponibles</option>
-    </select>
-      <button class="btn-primary" @click="showAddModal = true">
-        Nuevo horario disponible
-      </button>
+  <div class="p-6 space-y-6 bg-gray-100 min-h-screen">
+
+    <!-- Filtros y acciones -->
+    <div class="bg-white p-4 rounded-lg shadow flex flex-wrap items-end gap-4">
+      <div class="flex flex-col">
+        <label class="text-sm font-medium text-gray-700 mb-1">Desde</label>
+        <input v-model="startTime" type="datetime-local" class="input w-56" />
+      </div>
+
+      <div class="flex flex-col">
+        <label class="text-sm font-medium text-gray-700 mb-1">Hasta</label>
+        <input v-model="endTime" type="datetime-local" class="input w-56" />
+      </div>
+
+      <div class="flex flex-col">
+        <label class="text-sm font-medium text-gray-700 mb-1">Estado</label>
+        <select v-model="isBooked" class="input w-40">
+          <option :value="null">Todos</option>
+          <option :value="true">Reservados</option>
+          <option :value="false">Disponibles</option>
+        </select>
+      </div>
+
+      <div class="ml-auto flex gap-2 mt-4 sm:mt-0">
+        <button
+          class="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"
+          @click="showAddModal = true"
+        >
+          + Nuevo horario
+        </button>
+
+        <button
+          v-if="selectedIds.length"
+          @click="deleteSelected"
+          class="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition"
+        >
+          Eliminar seleccionados ({{ selectedIds.length }})
+        </button>
+      </div>
+    </div>
+
+    <!-- Tabla de horarios -->
+    <AvailabilityTable
+      :types="types"
+      :selectedIds="selectedIds"
+      @updateSelected="selectedIds = $event"
+      @editType="editType"
+    />
+
+    <!-- Paginación -->
+    <div class="flex justify-between items-center">
       <button
-  v-if="selectedIds.length"
-  @click="deleteSelected"
-  class="mb-4 px-4 py-2 bg-red-600 text-white font-semibold rounded hover:bg-red-700 transition"
->
-  Eliminar seleccionados ({{ selectedIds.length }})
-</button>
+        @click="prev"
+        :disabled="currentPage === 1"
+        class="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50"
+      >
+        ← Anterior
+      </button>
 
+      <span class="text-sm font-medium text-gray-600">Página {{ currentPage }}</span>
+
+      <button
+        @click="next"
+        :disabled="isLastPage"
+        class="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 disabled:opacity-50"
+      >
+        Siguiente →
+      </button>
     </div>
 
-<AvailabilityTable
-  :types="types"
-  :selectedIds="selectedIds" 
-  @updateSelected="selectedIds = $event"
-  @editType="editType"
-/>
-
-
-    <!-- paginación -->
-    <div class="mt-4 flex justify-between">
-      <button @click="prev" :disabled="currentPage === 1">Anterior</button>
-      <span>Página {{ currentPage }}</span>
-      <button @click="next" :disabled="isLastPage">Siguiente</button>
-    </div>
-
-    <!-- modal crear / editar -->
+    <!-- Modal -->
     <AvailabilityModal
-        v-if="showAddModal || editingType !== null"
+      v-if="showAddModal || editingType !== null"
       :typeToEdit="editingType"
       @saved="onSaved"
       @close="closeModal"
@@ -47,9 +79,12 @@
   </div>
 </template>
 
+
 <script>
 import { mapGetters } from 'vuex';
 import { AvailabilityService } from '../../../lib/application/Disponibilidad/disponibilidad';
+import { ref } from 'vue';
+
 
 import AvailabilityTable from './AvailabilityTable.vue';
 import AvailabilityModal from './AvailabilityModal.vue';
@@ -75,7 +110,17 @@ export default {
   mounted() {
     this.loadSlots();
   },
-  
+  computed: {
+  calendarEvents() {
+    return this.types.map(slot => ({
+      id: slot.id,
+      title: slot.isBooked ? 'Reservado' : 'Disponible',
+      start: slot.startTime,
+      end: slot.endTime,
+      color: slot.isBooked ? '#e53e3e' : '#38a169', // rojo o verde
+    }));
+  }
+},
   methods: {
 async loadSlots() {
   try {

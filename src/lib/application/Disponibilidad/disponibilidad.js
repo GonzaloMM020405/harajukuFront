@@ -5,7 +5,7 @@ export class AvailabilityService {
   // GET paginado + búsqueda
   async getAvailability(page = 1, limit = 10, start_time, end_time, is_booked ) {
     try {
-      let url = `/v1/availabilityslots/?limit=${limit}&skip=${page}`;
+      let url = `/v1/availabilityslots?limit=${limit}&skip=${page}`;
 
       if (start_time) {
         url += `&start_time=${encodeURIComponent(start_time)}`;
@@ -55,7 +55,7 @@ async updateSlot({ id, StartTime, EndTime, is_booked }) {
   try {
     if (!id) throw new Error('ID de tipo de servicio no proporcionado');
 
-    const url = `/v1/availabilityslots/${encodeURIComponent(id)}`;
+    const url = `/v1/availabilityslots?id=${encodeURIComponent(id)}`;
 
     const body = {};
     if (StartTime !== undefined) body.StartTime = StartTime;
@@ -79,7 +79,7 @@ async updateSlot({ id, StartTime, EndTime, is_booked }) {
   // DELETE
   async deleteSlot(id) {
     try {
-      const { data } = await axios.delete(`/v1/availabilityslots/?id=${encodeURIComponent(id)}`, {
+      const { data } = await axios.delete(`/v1/availabilityslots?id=${encodeURIComponent(id)}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
