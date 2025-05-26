@@ -25,7 +25,14 @@
             <td class="px-4 py-2">{{ getServiceName(c.typeOfServiceID) }}</td>
             <td class="px-4 py-2">{{ c.description }}</td>
             <td class="px-4 py-2 capitalize">{{ c.state }}</td>
-            <td class="px-4 py-2"> {{ c.price ? `$${c.price.toFixed(2)}` : 'N/A' }}</td>
+            <td class="px-4 py-2">
+                {{
+                    getServicePrice(c.typeOfServiceID)
+                    ? `$${getServicePrice(c.typeOfServiceID).toFixed(2)}`
+                    : 'N/A'
+                }}
+            </td>
+
             <td v-if="role === 'admin'" class="px-4 py-2">
                 <button @click="verDetalle(c.id)" class="text-blue-600 hover:underline text-sm">
                     Ver detalle
@@ -38,15 +45,18 @@
 
     <p v-else class="text-gray-500">No tienes cotizaciones registradas.</p>
   </div>
-  
+
   <QuoteDetail
   v-if="verDetalleId"
   :id="verDetalleId"
   @cerrar="verDetalleId = null"
 />
+
+
 </template>
 
 <script setup>
+import { Dialog } from '@headlessui/vue'
 import { ref, onMounted } from 'vue'
 import { ServicioCotizaciones } from '../../../lib/application/cotizaciones/cotizaciones'
 import { TypeOfServiceService } from '../../../lib/application/tipoServicio/typeOfService'
@@ -84,6 +94,11 @@ function formatDate(dateStr) {
 function getServiceName(serviceId) {
   const servicio = servicios.value.find(s => s.id === serviceId)
   return servicio ? servicio.name : 'Desconocido'
+}
+
+function getServicePrice(serviceId) {
+  const servicio = servicios.value.find(s => s.id === serviceId)
+  return servicio ? servicio.price : null
 }
 
 

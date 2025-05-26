@@ -188,12 +188,12 @@ async function handleSubmit() {
 
 
 //Role management para mostrar las vistas 
-const role = ref('admin') // Cambia a 'admin' para ver la vista de administrador
+const role = ref('client') // Cambia a 'admin' para ver la vista de administrador
 const isFormVisible = ref(false)
 function openModal() {
   isFormVisible.value = true
 }
-// se debe de exponer la URL cuandp es srcipt setup
+// se debe de exponer la URL cuandp es srcip  t setup
 const URL = window.URL
 
 //esta es la funcion para eliminar la imagen

@@ -7,6 +7,7 @@
       <p><strong>Descripción:</strong> {{ cotizacion.description }}</p>
       <p><strong>Estado:</strong> {{ cotizacion.state }}</p>
       <p><strong>Precio:</strong> {{ cotizacion.price ? `$${cotizacion.price.toFixed(2)}` : 'N/A' }}</p>
+      <p><strong>Precio:</strong> {{ cotizacion.getServicePrice ? `$${cotizacion.getServicePrice.toFixed(2)}` : 'N/A' }}</p>
       <p><strong>Fecha:</strong> {{ formatDate(cotizacion.time) }}</p>
     </div>
 
@@ -15,12 +16,30 @@
     <button @click="$emit('cerrar')" class="mt-4 px-4 py-2 bg-red-500 text-white rounded">
       Cerrar
     </button>
+
+    <button
+    v-if="role === 'admin'"
+    @click="dialogEditar = true"
+    class="mt-4 ml-2 px-4 py-2 bg-blue-500 text-white rounded"
+    >Editar</button>
+
   </div>
+  <DialogEditQuote
+  :quote="cotizacion"
+  :visible="dialogEditar"
+  @cerrar="dialogEditar = false"
+  @actualizado="recargarDetalle"
+/>
 </template>
 
 <script setup>
 import { ref, watch } from 'vue'
 import { ServicioCotizaciones } from '../../../lib/application/cotizaciones/cotizaciones'
+import DialogEditQuote from './DialogEditQuote.vue'
+
+const dialogEditar = ref(false)
+const role = ref('admin')
+
 
 const props = defineProps({
   id: String
@@ -59,4 +78,12 @@ function formatDate(dateStr) {
     minute: '2-digit'
   })
 }
+
+
+async function recargarDetalle() {
+  await loadCotizacion() // vuelve a llamar el fetch actual
+}
+
+
+
 </script>
