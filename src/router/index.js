@@ -34,7 +34,13 @@ const routes = [
     path: '/services/Disponibilidad', 
     name: 'Disponibilidad', 
     component: Disponibilidad, 
-  },  {
+  },  
+  {
+    path: '/services/mis-cotizaciones',
+    name: 'MisCotizaciones',
+    component: () => import('../views/components/cotizaciones/QuotationList.vue'),
+  },
+  {
     path: '/appointment',
     name: 'Appointment',
     component: () => import('../views/Appointment.vue'),

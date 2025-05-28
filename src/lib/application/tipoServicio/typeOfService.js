@@ -9,7 +9,7 @@ export class TypeOfServiceService {
       if (searchQuery) {
         url += `&filters[name]=${encodeURIComponent(searchQuery)}`;
       }
-
+//manera de autentificar con el token 
       const { data } = await axios.get(url, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
