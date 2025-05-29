@@ -14,7 +14,7 @@
     <div  class="flex flex-col items-center justify-center gap-8 py-10 bg-gray-100">
       <!-- Tarjeta (card) -->
       <p class="text-xs text-red-500">Role actual: {{ role }}</p>
-      <div v-if="role === 'client'" class="bg-white shadow-lg rounded-xl p-8 max-w-lg text-center">
+      <div v-if="role === 'client' || 'admin'" class="bg-white shadow-lg rounded-xl p-8 max-w-lg text-center">
         <h2 class="text-2xl font-bold text-gray-800 mb-2">
           Cotiza tu servicio ahora mismo
         </h2>
@@ -195,7 +195,7 @@ async function handleSubmit() {
 
 
 //Role management para mostrar las vistas 
-const role = ref('client') // Cambia a 'admin' para ver la vista de administrador
+const role = ref('admin') // Cambia a 'admin' para ver la vista de administrador
 const isFormVisible = ref(false)
 function openModal() {
   isFormVisible.value = true
