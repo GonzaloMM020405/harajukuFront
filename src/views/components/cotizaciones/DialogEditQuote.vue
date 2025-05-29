@@ -6,8 +6,8 @@
       <div class="mb-4">
         <label class="block font-medium mb-1">Estado</label>
         <select v-model="form.state" class="w-full border rounded px-3 py-2">
-          <option value="pending">Pendiente</option>
-          <option value="approved">Creada</option>
+          <option value="requires_proof">Requiere evidencia</option>
+          <option value="approved">Aprobada</option>
           <option value="rejected">Rechazada</option>
         </select>
       </div>
@@ -53,18 +53,36 @@ watch(() => props.quote, (nueva) => {
 }, { immediate: true })
 
 async function guardar() {
+  const api = new ServicioCotizaciones()
+
   try {
-    const api = new ServicioCotizaciones()
-    await api.actualizarCotizacion({
-      id: props.quote.id,
-      state: form.value.state,
-      price: form.value.price
-    })
-    emit('actualizado')  // padre puede recargar la lista
-    emit('cerrar')
+    // 1. Cambiar estado solo si es diferente
+    if (form.value.state !== props.quote.state) {
+      await api.cambiarEstadoCotizacion(props.quote.id, form.value.state)
+    }
+
+    // 2. Cambiar precio solo si es diferente
+    if (form.value.price !== props.quote.price) {
+      await api.actualizarCotizacion({
+        _id: props.quote.id, // usa _id si así lo espera tu backend
+        price: form.value.price,
+        description: props.quote.description, // requerido por tu API
+        typeOfServiceID: props.quote.typeOfServiceID,
+        clientID: props.quote.clientID,
+        state: form.value.state, // puedes enviarlo, pero será ignorado por esta ruta
+        testRequired: props.quote.testRequired || false,
+      })
+    }
+
+    emit('actualizado')  // para recargar
+    emit('cerrar')       // cerrar modal
   } catch (err) {
     console.error('Error actualizando cotización', err)
     alert('Error al actualizar ❌')
   }
 }
+
+
+
+
 </script>

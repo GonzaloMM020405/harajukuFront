@@ -32,7 +32,9 @@
                     : 'N/A'
                 }}
             </td>
+            
 
+            <!-- Botón para ver detalle solo si es admin -->
             <td v-if="role === 'admin'" class="px-4 py-2">
                 <button @click="verDetalle(c.id)" class="text-blue-600 hover:underline text-sm">
                     Ver detalle
@@ -45,12 +47,27 @@
 
     <p v-else class="text-gray-500">No tienes cotizaciones registradas.</p>
   </div>
+  <!--Para hacerlo modal y se despliegue--->
+  <template>
+  <Dialog :open="verDetalleId !== null" @close="verDetalleId = null" class="fixed inset-0 z-50 overflow-y-auto">
+    <div class="flex items-center justify-center min-h-screen px-4">
+      <!-- Fondo difuminado -->
+      <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" />
 
-  <QuoteDetail
-  v-if="verDetalleId"
-  :id="verDetalleId"
-  @cerrar="verDetalleId = null"
-/>
+      <!-- Contenido del modal -->
+      <div class="relative z-10 w-full max-w-3xl bg-white p-6 rounded-lg shadow-xl">
+        <QuoteDetail
+          v-if="verDetalleId"
+          :id="verDetalleId"
+          @cerrar="verDetalleId = null"
+        />
+      </div>
+    </div>
+  </Dialog>
+</template>
+
+
+
 
 
 </template>
@@ -105,6 +122,12 @@ function getServicePrice(serviceId) {
 //Var para controlar la visibilidad del detalle administrativo
 const verDetalleId = ref(null)
 function verDetalle(id) {
+  if(role.value !== 'admin') {
+    alert('Solo los administradores pueden ver los detalles de las cotizaciones.')
+    return
+  }
   verDetalleId.value = id
 }
+
+
 </script>
