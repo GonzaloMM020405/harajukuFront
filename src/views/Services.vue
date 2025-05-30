@@ -100,6 +100,7 @@
     </router-link>
 
     <router-link 
+          v-if="role === 'admin'" 
       to="/services/Disponibilidad"
       class="bg-blue-500 hover:bg-blue-600 transition duration-300 text-white font-semibold px-12 py-4 rounded-xl shadow-lg"
     >
@@ -111,9 +112,13 @@
 
 <script setup>
 import Terminos from '../views/components/Terminos.vue'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { TypeOfServiceService } from '../lib/application/tipoServicio/typeOfService'
 import { ServicioCotizaciones } from '../lib/application/cotizaciones/cotizaciones'
+import { useStore } from 'vuex'
+
+const store = useStore()
+const role = computed(() => store.getters.getUserRole)
 
 const servicios = ref([])
 const loading = ref(false)
@@ -194,8 +199,6 @@ async function handleSubmit() {
 }
 
 
-//Role management para mostrar las vistas 
-const role = ref('client') // Cambia a 'admin' para ver la vista de administrador
 const isFormVisible = ref(false)
 function openModal() {
   isFormVisible.value = true

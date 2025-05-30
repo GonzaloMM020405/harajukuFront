@@ -46,6 +46,11 @@ const routes = [
     component: () => import('../views/Appointment.vue'),
     meta: { requiresAuth: true }
   },
+    {
+    path: '/appointment/citas',
+    name: 'Citas',
+    component: () => import('../views/components/Citas/Citas.vue'),
+  },
   { path: '/gallery', name: 'Gallery', component: Gallery },
   { path: '/location', name: 'Location', component: Location },
 ]
