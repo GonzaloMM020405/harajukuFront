@@ -14,7 +14,7 @@
     <div  class="flex flex-col items-center justify-center gap-8 py-10 bg-gray-100">
       <!-- Tarjeta (card) -->
       <p class="text-xs text-red-500">Role actual: {{ role }}</p>
-      <div v-if="role === 'client' || 'admin'" class="bg-white shadow-lg rounded-xl p-8 max-w-lg text-center">
+      <div v-if="role === 'client' || role === 'admin'" class="bg-white shadow-lg rounded-xl p-8 max-w-lg text-center">
         <h2 class="text-2xl font-bold text-gray-800 mb-2">
           Cotiza tu servicio ahora mismo
         </h2>
@@ -99,7 +99,8 @@
       Administrar tipos de servicios
     </router-link>
 
-    <router-link 
+    <router-link
+      v-if="role === 'admin'" 
       to="/services/Disponibilidad"
       class="bg-blue-500 hover:bg-blue-600 transition duration-300 text-white font-semibold px-12 py-4 rounded-xl shadow-lg"
     >
@@ -114,6 +115,13 @@ import Terminos from '../views/components/Terminos.vue'
 import { ref, onMounted } from 'vue'
 import { TypeOfServiceService } from '../lib/application/tipoServicio/typeOfService'
 import { ServicioCotizaciones } from '../lib/application/cotizaciones/cotizaciones'
+import { useStore } from 'vuex'
+import { computed } from 'vue'
+// Importar el store de Vuex
+const store = useStore()
+const role = computed(() => store.getters.getUserRole)
+
+
 
 const servicios = ref([])
 const loading = ref(false)
@@ -194,8 +202,7 @@ async function handleSubmit() {
 }
 
 
-//Role management para mostrar las vistas 
-const role = ref('admin') // Cambia a 'admin' para ver la vista de administrador
+
 const isFormVisible = ref(false)
 function openModal() {
   isFormVisible.value = true

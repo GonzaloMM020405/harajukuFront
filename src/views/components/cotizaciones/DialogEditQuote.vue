@@ -6,25 +6,10 @@
       <div class="mb-4">
         <label class="block font-medium mb-1">Estado</label>
         <select v-model="form.state" class="w-full border rounded px-3 py-2">
-          <option value="requires_proof">Requiere evidencia</option>
-          <option value="approved">Aprobada</option>
-          <option value="rejected">Rechazada</option>
+          <option value="requires_proof">Requiere prueba de mechón</option>
+          <option value="pending_payment">Aprobar</option>
+          <option value="rejected">Rechazar</option>
         </select>
-      </div>
-
-      <div class="mb-4">
-        <label class="block font-medium mb-1">Precio</label>
-        <input
-          v-model.number="form.price"
-          type="number"
-          class="w-full border rounded px-3 py-2"
-        />
-        <label class="block font-medium mb-1">Descripcion</label>
-        <input
-          v-model.number="form.description"
-          type="text"
-          class="w-full border rounded px-3 py-2"
-        />
       </div>
 
       <div class="flex justify-end gap-2">
@@ -70,14 +55,9 @@ async function guardar() {
 
     // 2. Cambiar precio solo si es diferente
     if (form.value.price !== props.quote.price) {
-      await api.actualizarCotizacion({
-        _id: props.quote.id, // usa _id si así lo espera tu backend
-        price: form.value.price,
-        description: props.quote.description, // requerido por tu API
-        typeOfServiceID: props.quote.typeOfServiceID,
-        clientID: props.quote.clientID,
-        state: form.value.state, // puedes enviarlo, pero será ignorado por esta ruta
-        testRequired: props.quote.testRequired || false,
+      await api.cambiarEstadoCotizacion({
+        id: props.quote.id,
+        state: form.value.state,
       })
     }
 
