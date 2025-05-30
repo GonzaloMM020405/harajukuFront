@@ -9,7 +9,11 @@ export class ServicioCotizaciones {
         headers: {
           Authorization: `Bearer ${token}`,
         },
+
+
+        
       });
+      console.log("Respuesta completa al obtener cotizaciones:", response.data);
       return response.data.data.quotes || []
     } catch (error) {
       console.error("Error al obtener cotizaciones:", error);

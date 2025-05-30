@@ -1,7 +1,7 @@
 <template>
   <div v-if="visible" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
     <div class="bg-white p-6 rounded-lg shadow max-w-md w-full">
-      <h2 class="text-lg font-bold mb-4">Editar Cotización</h2>
+      <h2 class="text-lg font-bold mb-4">Editar Cotización ✍️</h2>
 
       <div class="mb-4">
         <label class="block font-medium mb-1">Estado</label>
@@ -17,6 +17,12 @@
         <input
           v-model.number="form.price"
           type="number"
+          class="w-full border rounded px-3 py-2"
+        />
+        <label class="block font-medium mb-1">Descripcion</label>
+        <input
+          v-model.number="form.description"
+          type="text"
           class="w-full border rounded px-3 py-2"
         />
       </div>
@@ -49,6 +55,7 @@ watch(() => props.quote, (nueva) => {
   if (nueva) {
     form.value.state = nueva.state
     form.value.price = nueva.price
+    form.value.description = nueva.description
   }
 }, { immediate: true })
 
