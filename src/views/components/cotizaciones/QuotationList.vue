@@ -81,7 +81,15 @@ import { ServicioCotizaciones } from '../../../lib/application/cotizaciones/coti
 import { TypeOfServiceService } from '../../../lib/application/tipoServicio/typeOfService'
 import QuoteDetail from './QuoteDetail.vue'
 
-const role = ref('admin')
+//const role = ref('admin')
+import { useStore } from 'vuex'
+import { computed } from 'vue'
+
+//valor dinamico 
+const store = useStore()
+const role = computed(() => store.getters.getUserRole)
+
+
 const cotizaciones = ref([])
 const servicios = ref([])
 
