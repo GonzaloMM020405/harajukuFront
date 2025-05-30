@@ -6,8 +6,6 @@
       <p><strong>ID:</strong> {{ cotizacion.id }}</p>
       <p><strong>Descripción:</strong> {{ cotizacion.description }}</p>
       <p><strong>Estado:</strong> {{ cotizacion.state }}</p>
-      <p><strong>Precio:</strong> {{ cotizacion.price ? `$${cotizacion.price.toFixed(2)}` : 'N/A' }}</p>
-      <p><strong>Precio:</strong> {{ cotizacion.getServicePrice ? `$${cotizacion.getServicePrice.toFixed(2)}` : 'N/A' }}</p>
       <p><strong>Fecha:</strong> {{ formatDate(cotizacion.time) }}</p>
     </div>
 

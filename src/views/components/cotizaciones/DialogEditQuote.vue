@@ -13,12 +13,7 @@
       </div>
 
       <div class="mb-4">
-        <label class="block font-medium mb-1">Precio</label>
-        <input
-          v-model.number="form.price"
-          type="number"
-          class="w-full border rounded px-3 py-2"
-        />
+
         <label class="block font-medium mb-1">Descripcion</label>
         <input
           v-model.number="form.description"
