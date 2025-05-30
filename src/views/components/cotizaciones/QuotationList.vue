@@ -34,8 +34,8 @@
             </td>
             <!-- Botón para ver detalle solo si es admin -->
             <td v-if="role === 'admin'" class="px-4 py-2">
-                <button @click="verDetalle(c.id)" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded">
-                    Ver detalle
+                <button @click="verDetalle(c.id)" class="mt-4 px-4 py-2 bg-orange-500 text-white rounded">
+                    Revisar
                 </button>
                 <button @click="confirmarEliminacion(c.id)" class="mt-4 px-4 py-2 bg-red-500 text-white rounded">
                     Eliminar
@@ -66,12 +66,6 @@
       </div>
     </div>
   </Dialog>
-
-
-
-
-
-
 </template>
 
 <script setup>
