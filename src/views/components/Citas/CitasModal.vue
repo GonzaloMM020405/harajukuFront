@@ -62,7 +62,7 @@ export default {
   methods: {
     async fetchSlots() {
       try {
-        const result = await this.availabilityService.getAvailability(0, 50);
+        const result = await this.availabilityService.getAvailability(1, 50);
         this.slots = result.items;
       } catch (error) {
         console.error('Error al obtener espacios:', error);

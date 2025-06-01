@@ -27,8 +27,8 @@
   </div>
 
   <!-- Botón grande azul inferior -->
-  <button class="bg-blue-500 hover:bg-blue-600 transition duration-300 text-white font-semibold px-12 py-4 rounded-xl shadow-lg">
-    Ver mis citas
+  <button @click="irAComprobantes" class="bg-blue-500 hover:bg-blue-600 transition duration-300 text-white font-semibold px-12 py-4 rounded-xl shadow-lg">
+    Ver o subir comprobantes
   </button>
 
 </div>
@@ -48,6 +48,9 @@ export default {
   methods: {
   irACitas() {
     this.$router.push('/appointment/citas');
+  },
+    irAComprobantes() {
+    this.$router.push('/appointment/comprobantes');
   }
   }
 }

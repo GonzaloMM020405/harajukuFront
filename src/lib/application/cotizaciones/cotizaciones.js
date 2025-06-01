@@ -64,19 +64,22 @@ export class ServicioCotizaciones {
   async actualizarCotizacion(cotizacion) {
     try {
       const payload = {
-        typeOfServiceID: cotizacion.typeOfServiceID,
-        clientID: cotizacion.clientID,
-        description: cotizacion.description,
+        //typeOfServiceID: cotizacion.typeOfServiceID,
+        //clientID: cotizacion.clientID,
+        //description: cotizacion.description,
         state: cotizacion.state,
-        price: cotizacion.price,
-        testRequired: cotizacion.testRequired,
+        //price: cotizacion.price,
+        //testRequired: cotizacion.testRequired,
       };
 
-      const response = await axios.put(`/v1/quotes?id=${cotizacion._id}`, payload, {
+      const response = await axios.put(`/v1/quotes/state?id=${cotizacion.id}`, payload, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
+
+      console.log("id de cotización:", cotizacion.id);
+      console.log("state de cotización:", cotizacion.state);
 
       return response.data;
     } catch (error) {

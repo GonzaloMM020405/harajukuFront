@@ -104,7 +104,7 @@ export default {
       endTime: '',
       isBooked: null,
       appointmentsService: new AppointmentsService(),
-      quoteService: new TypeOfServiceService(),
+      typeOfServiceService: new TypeOfServiceService(),
       availabilityService: new AvailabilityService(),
     };
   },
@@ -115,8 +115,9 @@ export default {
 async loadAppointments() {
   try {
     const response = await this.appointmentsService.getAppointments(this.currentPage, this.limit);
-    this.appointments = response.items; // ← items, no response.data.appointments
-    this.isLastPage = response.isLastPage; // ← propiedad calculada
+
+    this.appointments = response.items;
+    this.isLastPage = response.isLastPage;
   } catch (err) {
     console.error('Error loading appointments:', err);
   }
@@ -138,7 +139,7 @@ async loadAppointments() {
     },
     async loadQuotes() {
       try {
-        this.quotes = await this.quoteService.getCotizaciones(1, 100, '', '', '');
+        this.quotes = await this.appointmentsService.getAppointments(1, 100, '', '', '');
       } catch (err) {
         console.error('Error loading quotes:', err);
       }

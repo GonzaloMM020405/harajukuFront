@@ -69,7 +69,7 @@ isLastPage: data.data.appointments.length < limit,
   }
 
   // POST
-  async addSlot(payload) {
+  async createAppointment(payload) {
     try {
       const { data } = await axios.post('/v1/appointments', payload, {
         headers: {

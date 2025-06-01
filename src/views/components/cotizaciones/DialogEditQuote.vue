@@ -6,8 +6,8 @@
       <div class="mb-4">
         <label class="block font-medium mb-1">Estado</label>
         <select v-model="form.state" class="w-full border rounded px-3 py-2">
-          <option value="pending">Pendiente</option>
-          <option value="approved">Creada</option>
+          <option value="requires_proof">Requiere prueba de mechon</option>
+          <option value="pending_payment">Pendiente de pago</option>
           <option value="rejected">Rechazada</option>
         </select>
       </div>
@@ -58,7 +58,7 @@ async function guardar() {
     await api.actualizarCotizacion({
       id: props.quote.id,
       state: form.value.state,
-      price: form.value.price
+      //price: form.value.price
     })
     emit('actualizado')  // padre puede recargar la lista
     emit('cerrar')
