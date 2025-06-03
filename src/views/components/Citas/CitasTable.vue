@@ -10,6 +10,7 @@
           <th class="px-6 py-3">ID del slot</th>
           <th class="px-6 py-3">Comprobante</th>
           <th class="px-6 py-3">Editar</th>
+          <th class="px-6 py-3" v-if="role === 'admin'">Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -63,6 +64,27 @@
               Editar
             </a>
           </td>
+<td class="px-6 py-4" v-if="role === 'admin'">
+  <template v-if="appointment.status !== 'booked'">
+    <button
+      class="text-green-600 hover:underline mr-2"
+      @click="cambiarEstadoCotizacion(appointment.quoteId, 'approved')"
+    >
+      Aceptar
+    </button>
+    <button
+      class="text-red-600 hover:underline"
+      @click="cambiarEstadoCotizacion(appointment.quoteId, 'rejected')"
+    >
+      Rechazar
+    </button>
+  </template>
+  <template v-else>
+    <span class="text-gray-500 italic">Ya agendada</span>
+  </template>
+</td>
+
+
         </tr>
       </tbody>
     </table>
@@ -84,6 +106,7 @@
 import { ServicioComprobantes } from '../../../lib/application/Comprobantes/comprobantes';
 import { ref, onMounted, computed } from 'vue';
 import { useStore } from 'vuex';
+import { ServicioCotizaciones } from '../../../lib/application/Cotizaciones/cotizaciones';
 
 export default {
   props: {
@@ -95,7 +118,6 @@ export default {
       archivosPendientes: {},
       archivo: null,
       modalVisible: false,
-
     };
   },
   emits: ['updateSelected', 'editAppointment'],
@@ -108,12 +130,25 @@ export default {
     const archivo = ref(null);
     const citaSeleccionada = ref(null);
     const quoteIdSeleccionada = ref(null);
-
+    const servicioCotizaciones = new ServicioCotizaciones();
     const abrirModal = (citaId, quoteId) => {
       citaSeleccionada.value = citaId;
       quoteIdSeleccionada.value = quoteId;
       modalVisible.value = true;
     };
+
+  const cambiarEstadoCotizacion = async (quoteId, nuevoEstado) => {
+  try {
+    await servicioCotizaciones.cambiarEstadoCotizacion({
+      id: quoteId,
+      state: nuevoEstado,
+    });
+    alert(`Cotización ${nuevoEstado === 'approved' ? 'aprobada' : 'rechazada'} correctamente`);
+  } catch (error) {
+    console.error('Error al cambiar estado de cotización:', error);
+    alert('Hubo un error al actualizar el estado');
+  }
+};
 
 const handleFileInput = async (event, quoteId) => {
   const file = event.target.files[0];
@@ -188,17 +223,23 @@ const confirmarSubida = async () => {
     };
 
 
-    const verComprobante = async (quoteId) => {
+const verComprobante = async (quoteId) => {
   try {
-    const response = await servicio.obtenerComprobantePorId(quoteId);
-    const blob = new Blob([response.data], { type: response.headers['content-type'] });
+    const comprobante = comprobantes.value[quoteId];
+    if (!comprobante) {
+      console.error("No se encontró comprobante para quoteId", quoteId);
+      return;
+    }
 
+    const response = await servicio.obtenerComprobantePorId(comprobante.id);
+
+    const blob = new Blob([response.data], { type: response.headers['content-type'] });
     const url = URL.createObjectURL(blob);
+
     const link = document.createElement('a');
     link.href = url;
-    link.target = '_blank'; // abre en nueva pestaña
-    link.download = `comprobante-${quoteId}`; // nombre por defecto si se descarga
-
+    link.target = '_blank';
+    link.download = response.headers['content-disposition']?.split('filename=')[1] || `comprobante-${quoteId}`;
     link.click();
 
     setTimeout(() => URL.revokeObjectURL(url), 100);
@@ -232,6 +273,7 @@ const confirmarSubida = async () => {
       archivo,
       handleFileInput,
       verComprobante,
+      cambiarEstadoCotizacion
     };
   },
   methods: {

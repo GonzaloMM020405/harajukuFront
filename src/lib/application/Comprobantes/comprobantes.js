@@ -53,19 +53,18 @@ async subirComprobante(formData) {
       throw error;
     }
   }
-
-  async obtenerComprobantePorId(id) {
-    try {
-      const response = await axios.get(`/v1/paymentproofs/?id=${id}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-        responseType: 'blob',
-      });
-      return response;
-    } catch (error) {
-      console.error("Error al obtener comprobante por ID:", error.response?.data || error);
-      throw error;
-    }
+async obtenerComprobantePorId(id) {
+  try {
+    const response = await axios.get(`/v1/paymentproofs?id=${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+      responseType: 'blob',
+    });
+    return response;
+  } catch (error) {
+    console.error("Error al obtener comprobante por ID:", error.response?.data || error);
+    throw error;
   }
+}
 }
