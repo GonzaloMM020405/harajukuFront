@@ -1,37 +1,5 @@
 <template>
-  <div>
-    <!-- Componente Terminos -->
-    <Terminos></Terminos>
-
-    <!-- Cabecera con fondo degradado -->
-    <div class="w-full bg-gradient-to-r from-blue-400 to-teal-300 py-12 px-4 text-center">
-      <h2 class="text-2xl md:text-3xl font-bold text-gray-800">
-        ¡Personaliza tu experiencia y obtén una cotización a medida para el servicio que necesitas!
-      </h2>
-    </div>
-
-    <!-- Contenedor principal -->
-    <div  class="flex flex-col items-center justify-center gap-8 py-10 bg-gray-100">
-      <!-- Tarjeta (card) -->
-      <p class="text-xs text-red-500">Role actual: {{ role }}</p>
-      <div v-if="role === 'client' || role === 'admin'" class="bg-white shadow-lg rounded-xl p-8 max-w-lg text-center">
-        <h2 class="text-2xl font-bold text-gray-800 mb-2">
-          Cotiza tu servicio ahora mismo
-        </h2>
-        <div class="border-t-2 border-blue-400 w-24 mx-auto my-4"></div>
-        <p class="text-sm text-gray-500 mb-6">
-          Haz clic aquí para completar el formulario y recibir tu cotización personalizada
-        </p>
-        <button @click="openModal" 
-        class="inline-flex items-center gap-2 border border-blue-400 text-blue-500 hover:bg-blue-50 transition duration-300 font-semibold px-4 py-2 rounded-full">
-          Cotizar
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
-          </svg>
-        </button>
-      </div>
-
-      <!-- Modal para cotizar -->
+          <!-- Modal para cotizar -->
       <div v-if="isFormVisible" class="max-w-xl mx-auto bg-white p-6 rounded shadow">
     <h2 class="text-xl font-bold mb-4">Crear Cotización</h2>
 
@@ -83,46 +51,16 @@
       </button>
     </form>
   </div>
-      <!--Clic para ver las cotizaciones-->
-      <router-link 
-      to="/services/mis-cotizaciones"
-      class="bg-blue-500 hover:bg-blue-600 transition duration-300 text-white font-semibold px-12 py-4 rounded-xl shadow-lg"
-    >
-      Ver mis cotizaciones
-    </router-link>
-
-      <router-link
-      v-if="role === 'admin'" 
-      to="/services/TipoServicios"
-      class="bg-blue-500 hover:bg-blue-600 transition duration-300 text-white font-semibold px-12 py-4 rounded-xl shadow-lg"
-    >
-      Administrar tipos de servicios
-    </router-link>
-
-
-    <router-link
-      v-if="role === 'admin'" 
-      to="/services/Disponibilidad"
-      class="bg-blue-500 hover:bg-blue-600 transition duration-300 text-white font-semibold px-12 py-4 rounded-xl shadow-lg"
-    >
-      Administrar Horarios Disponibles
-    </router-link>
-    </div>
-  </div>
 </template>
-
 <script setup>
 import Terminos from '../views/components/Terminos.vue'
 import { ref, onMounted, computed } from 'vue'
 import { TypeOfServiceService } from '../lib/application/tipoServicio/typeOfService'
 import { ServicioCotizaciones } from '../lib/application/cotizaciones/cotizaciones'
 import { useStore } from 'vuex'
-import { computed } from 'vue'
-// Importar el store de Vuex
+
 const store = useStore()
 const role = computed(() => store.getters.getUserRole)
-
-
 
 const servicios = ref([])
 const loading = ref(false)
@@ -223,7 +161,5 @@ function clearFileInput() {
     fileInputRef.value.value = ''
   }
 }
-
-
 
 </script>

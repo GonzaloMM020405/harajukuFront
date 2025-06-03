@@ -18,8 +18,8 @@
     <p class="text-sm text-gray-500 mb-6">
       Haz clic aquí para ver el calendario con las fechas y horas disponibles
     </p>
-    <button class="inline-flex items-center gap-2 border border-blue-400 text-blue-500 hover:bg-blue-50 transition duration-300 font-semibold px-4 py-2 rounded-full">
-      Agendar
+    <button @click="irACitas" class="inline-flex items-center gap-2 border border-blue-400 text-blue-500 hover:bg-blue-50 transition duration-300 font-semibold px-4 py-2 rounded-full">
+      Agendar y ver citas
       <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
         <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
       </svg>
@@ -27,8 +27,8 @@
   </div>
 
   <!-- Botón grande azul inferior -->
-  <button class="bg-blue-500 hover:bg-blue-600 transition duration-300 text-white font-semibold px-12 py-4 rounded-xl shadow-lg">
-    Ver mis citas
+  <button @click="irAComprobantes" class="bg-blue-500 hover:bg-blue-600 transition duration-300 text-white font-semibold px-12 py-4 rounded-xl shadow-lg">
+    Ver o subir comprobantes
   </button>
 
 </div>
@@ -44,6 +44,14 @@ export default {
   name: 'Appointment',
   components: {
     Terminos
+  },
+  methods: {
+  irACitas() {
+    this.$router.push('/appointment/citas');
+  },
+    irAComprobantes() {
+    this.$router.push('/appointment/comprobantes');
+  }
   }
 }
 </script>
