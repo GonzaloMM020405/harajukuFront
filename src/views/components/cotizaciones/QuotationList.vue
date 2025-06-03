@@ -1,6 +1,6 @@
 <template>
   <div class="w-full max-w-5xl mx-auto bg-white p-6 rounded shadow">
-    <h2 class="text-xl font-bold mb-4">Mis Cotizaciones</h2>
+    <h2 class="text-xl font-bold mb-4">Mis Cotizaciones 📗</h2>
 
     <div v-if="cotizaciones && cotizaciones.length">
       <table class="w-full table-auto border">
@@ -32,12 +32,16 @@
                     : 'N/A'
                 }}
             </td>
-
+            <!-- Botón para ver detalle solo si es admin -->
             <td v-if="role === 'admin'" class="px-4 py-2">
-                <button @click="verDetalle(c.id)" class="text-blue-600 hover:underline text-sm">
-                    Ver detalle
+                <button @click="verDetalle(c.id)" class="mt-4 px-4 py-2 bg-orange-500 text-white rounded">
+                    Revisar
+                </button>
+                <button @click="confirmarEliminacion(c.id)" class="mt-4 px-4 py-2 bg-red-500 text-white rounded">
+                    Eliminar
                 </button>
             </td>
+            
           </tr>
         </tbody>
       </table>
@@ -45,14 +49,23 @@
 
     <p v-else class="text-gray-500">No tienes cotizaciones registradas.</p>
   </div>
+  <!--Para hacerlo modal y se despliegue--->
 
-  <QuoteDetail
-  v-if="verDetalleId"
-  :id="verDetalleId"
-  @cerrar="verDetalleId = null"
-/>
+  <Dialog :open="verDetalleId !== null" @close="verDetalleId = null" class="fixed inset-0 z-50 overflow-y-auto">
+    <div class="flex items-center justify-center min-h-screen px-4">
+      <!-- Fondo difuminado -->
+      <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" />
 
-
+      <!-- Contenido del modal -->
+      <div class="relative z-10 w-full max-w-3xl bg-white p-6 rounded-lg shadow-xl">
+        <QuoteDetail
+          v-if="verDetalleId"
+          :id="verDetalleId"
+          @cerrar="verDetalleId = null"
+        />
+      </div>
+    </div>
+  </Dialog>
 </template>
 
 <script setup>
@@ -62,7 +75,15 @@ import { ServicioCotizaciones } from '../../../lib/application/cotizaciones/coti
 import { TypeOfServiceService } from '../../../lib/application/tipoServicio/typeOfService'
 import QuoteDetail from './QuoteDetail.vue'
 
-const role = ref('admin')
+//const role = ref('admin')
+import { useStore } from 'vuex'
+import { computed } from 'vue'
+
+//valor dinamico 
+const store = useStore()
+const role = computed(() => store.getters.getUserRole)
+
+
 const cotizaciones = ref([])
 const servicios = ref([])
 
@@ -105,6 +126,39 @@ function getServicePrice(serviceId) {
 //Var para controlar la visibilidad del detalle administrativo
 const verDetalleId = ref(null)
 function verDetalle(id) {
+  if(role.value !== 'admin') {
+    alert('Solo los administradores pueden ver los detalles de las cotizaciones.')
+    return
+  }
   verDetalleId.value = id
 }
+
+async function confirmarEliminacion(id) {
+  const confirmar = confirm("¿Estás seguro que deseas eliminar esta cotización?");
+  if (!confirmar) return;
+
+  try {
+    console.log("ID a eliminar:", id);
+    await cotizacionApi.eliminarCotizacion(id);
+    alert("Cotización eliminada correctamente.");
+
+    await cargarCotizaciones(); // 👈 esta es la forma correcta
+  } catch (error) {
+    alert("No se pudo eliminar la cotización.");
+    console.error("Error al eliminar:", error);
+  }
+}
+
+async function cargarCotizaciones() {
+  try {
+    const data = await cotizacionApi.getCotizaciones(skip.value, limit.value);
+    cotizaciones.value = data;
+  } catch (error) {
+    console.error("Error al cargar cotizaciones:", error);
+    cotizaciones.value = []; // fallback vacío si falla
+  }
+}
+
+
+
 </script>

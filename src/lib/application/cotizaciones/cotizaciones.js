@@ -9,7 +9,11 @@ export class ServicioCotizaciones {
         headers: {
           Authorization: `Bearer ${token}`,
         },
+
+
+        
       });
+      console.log("Respuesta completa al obtener cotizaciones:", response.data);
       return response.data.data.quotes || []
     } catch (error) {
       console.error("Error al obtener cotizaciones:", error);
@@ -142,4 +146,25 @@ export class ServicioCotizaciones {
       throw error;
     }
   }
+   // Cambia el estado de una cotización
+    async cambiarEstadoCotizacion(id, nuevoEstado) {
+    try {
+      const token = localStorage.getItem('token');
+
+      const response = await axios.patch(`/v1/quotes/state?id=${id}`, {
+        state: nuevoEstado,
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      return response.data;
+    } catch (error) {
+      console.error("Error al cambiar el estado de la cotización:", error.response?.data || error);
+      throw error;
+    }
+  }
+
 }
